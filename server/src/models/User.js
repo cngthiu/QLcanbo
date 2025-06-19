@@ -9,10 +9,14 @@ const User = sequelize.define(
     UserName: { type: DataTypes.STRING, allowNull: false },
     Email: { type: DataTypes.STRING },
     PassWord: { type: DataTypes.STRING, allowNull: false },
+    createDate: {
+      type: DataTypes.DATE,
+      defaultValue: sequelize.literal("GETDATE()"),
+    },
   },
   {
     tableName: "User",
-    timestamps: true,
+    timestamps: false,
     createdAt: "createDate",
     updatedAt: false,
   }
