@@ -44,7 +44,7 @@ const DaoTaoList = () => {
   const confirmDelete = async () => {
     try {
       await api.remove(idToDelete);
-      toast.success("Xóa thành công!");
+      toast.success("Xóa chương trình thành công!");
       fetchDaoTao();
     } catch (err) {
       console.error("Lỗi xóa dữ liệu:", err);

@@ -39,7 +39,7 @@ const GuiEmail = () => {
         return;
       }
       await api.sendEmailForTraining(id, { content: emailContent });
-      toast.success("Đã gửi email thành công!");
+      toast.success("Gửi email thành công!");
       navigate(-1);
     } catch (error) {
       console.error("Lỗi khi gửi email:", error);
@@ -186,26 +186,24 @@ const GuiEmail = () => {
           </div>
         </div>
         {/* Cột phải: chọn đơn vị nhận thông báo (chỉ làm giao diện giả lập) */}
-        <div className="bg-white border rounded p-6 min-w-[320px] max-w-[340px] ml-8">
-          <div className="font-bold mb-2">Chọn đơn vị nhận thông báo</div>
-          <table className="w-full text-sm mb-6">
-            <thead>
-              <tr>
-                <th className="w-8 text-center">
+        <div className=" p-6 min-w-[320px] max-w-[340px] ml-8">
+          <div className=" mb-2">Chọn đơn vị nhận thông báo</div>
+          <table className="w-full text-sm mb-6 border border-gray-300">
+            <tbody>
+              <tr className="border-b border-gray-300">
+                <td className="w-8 py-1 text-center border-r border-gray-300">
                   <input
                     type="checkbox"
                     onChange={handleSelectAll}
                     checked={uniqueDonVi.length > 0 && selectedDonVi.length === uniqueDonVi.length}
                     className="accent-blue-600"
                   />
-                </th>
-                <th className="text-left pb-2">Đơn vị</th>
+                </td>
+                <td className="py-1 font-bold">Đơn vị</td>
               </tr>
-            </thead>
-            <tbody>
               {uniqueDonVi.map((tenDV, index) => (
-                <tr key={index}>
-                  <td className="w-8 py-1 text-center">
+                <tr key={index} className="border-b border-gray-300">
+                  <td className="w-8 py-1 text-center border-r border-gray-300">
                     <input
                       type="checkbox"
                       id={`donvi-checkbox-${index}`}
@@ -226,13 +224,13 @@ const GuiEmail = () => {
           <div className="flex justify-end gap-4 mt-8">
             <Button
               variant="outline"
-              className="bg-red-600 text-white px-8 py-2 text-lg"
+              className="bg-red-600 text-white px py-2 text-md"
               onClick={() => navigate(-1)}
             >
               Hủy
             </Button>
             <Button
-              className="bg-blue-600 text-white px-8 py-2 text-lg"
+              className="bg-blue-600 text-white px py-2 text-md"
               onClick={handleSendEmail}
             >
               Gửi

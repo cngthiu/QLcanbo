@@ -75,10 +75,10 @@ const DaoTaoFormPage = () => {
     try {
       if (state?.MaCT) {
         await api.update(state.MaCT, form);
-        toast.success("Cập nhật thành công!");
+        toast.success("Cập nhật chương trình thành công!");
       } else {
         await api.create(form);
-        toast.success("Thêm mới thành công!");
+        toast.success("Thêm mới chương trình thành công!");
       }
       navigate("/daotao");
     } catch (error) {

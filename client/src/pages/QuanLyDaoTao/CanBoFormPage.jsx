@@ -102,7 +102,7 @@ const CanBoFormPage = () => {
     try {
       const dataToSend = { MaCB: selectedCanBo.MaCB };
       await api.addCanBoToCTDT(id, dataToSend);
-      toast.success("Thêm cán bộ vào danh sách tham gia thành công!");
+      toast.success("Thêm cán bộ thành công!");
       navigate(`/daotao/thamgia/${id}`);
     } catch (error) {
       console.error("Lỗi khi lưu:", error);

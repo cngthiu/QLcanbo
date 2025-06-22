@@ -60,10 +60,10 @@ const DMDaoTaoFormPage = () => {
     try {
       if (state?.MaDM) {
         await api.updateDMDaoTao(state.MaDM, form);
-        toast.success("Cập nhật thành công!");
+        toast.success("Cập nhật danh mục thành công!");
       } else {
         await api.createDMDaoTao(form);
-        toast.success("Thêm mới thành công!");
+        toast.success("Thêm mới danh mục thành công!");
       }
       navigate("/dmdaotao");
     } catch (error) {

@@ -39,10 +39,17 @@ const updateDMDaoTao = async (id, data) => {
 const removeDMDaoTao = async (id) => {
   const record = await DMDaoTao.findByPk(id);
   if (!record) throw new Error("NOT_FOUND");
-  await record.destroy();
+  if (record.MaTrangThai === '2') return true; // Đã ngưng hoạt động
+  await record.update({ MaTrangThai: '2' });
   return true;
 };
 
+// const removeDMDaoTao = async (id) => {
+//   const record = await DMDaoTao.findByPk(id);
+//   if (!record) throw new Error("NOT_FOUND");
+//   await record.destroy();
+//   return true;
+// };
 module.exports = {
   getAllDMDaoTao,
   createDMDaoTao,

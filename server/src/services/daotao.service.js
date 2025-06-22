@@ -52,9 +52,15 @@ const updateDaoTao = async (id, data) => {
 const removeDaoTao = async (id) => {
   const record = await DaoTao.findByPk(id);
   if (!record) throw new Error("NOT_FOUND");
-  await record.destroy();
+  if (record.MaTrangThai === '2') return true; // Đã ngưng hoạt động
+  await record.update({ MaTrangThai: '2' });
   return true;
 };
+// await record.destroy();
+// return true;
+// if (record.MaTrangThai === '2') return true; // Đã ngưng hoạt động
+// await record.update({ MaTrangThai: '2' });
+// return true;
 // Truy vấn thông tin tham gia đào tạo (join nhiều bảng)
 const getThamGiaByMaCT = async (MaCT) => {
   const where = {};
