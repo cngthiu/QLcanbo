@@ -13,6 +13,7 @@ exports.getAllUsers = async (req, res) => {
 
 exports.createUser = async (req, res) => {
   try {
+    console.log("Dữ liệu nhận được ở controller:", req.body);
     const result = await userService.createUser(req.body);
     res.json(result);
   } catch (err) {
@@ -37,6 +38,18 @@ exports.deleteUser = async (req, res) => {
     res.json(result);
   } catch (err) {
     console.error("Lỗi deleteUser:", err);
+    res.status(500).json({ message: "Lỗi server" });
+  }
+};
+
+exports.getEmailsByUserId = async (req, res) => {
+  try {
+    const { userId } = req.query;
+    if (!userId) return res.status(400).json({ message: "Thiếu userId" });
+    const emails = await userService.getEmailsByUserId(userId);
+    res.json(emails);
+  } catch (err) {
+    console.error("Lỗi getEmailsByUserId:", err);
     res.status(500).json({ message: "Lỗi server" });
   }
 };

@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "../components/MainLayout";
 import ProtectedRoute from "../components/ProtectedRoute";
-
 import Login from "../pages/Login/Login";
 import Dashboard from "../pages/Dashboard";
 import Unauthorized from "../pages/Unauthorized";
@@ -9,6 +8,16 @@ import UserList from "../pages/UserList";
 import BangCapList from "../pages/QuanLyBangCap/BangCapList";
 import BangCapFormPage from "../pages/QuanLyBangCap/BangCapFormPage";
 import BangCapDetail from "@/pages/QuanLyBangCap/BangCapDetail";
+import DaoTaoList from "../pages/QuanLyDaoTao/DaoTaoList";
+import DaoTaoFormPage from "../pages/QuanLyDaoTao/DaoTaoFormPage";
+import DaoTaoDetail from "../pages/QuanLyDaoTao/DaoTaoDetail";
+import DMDaoTaoList from "../pages/QuanLyDaoTao/DMDaoTaoList";
+import DMDaoTaoFormPage from "../pages/QuanLyDaoTao/DMDaoTaoFormPage";
+import CanBoFormPage from "../pages/QuanLyDaoTao/CanBoFormPage";
+import InDanhSachCanBo from "../pages/QuanLyDaoTao/InDanhSachCanBo";
+import GuiEmail from "../pages/QuanLyDaoTao/GuiEmail";
+import XemEmail from "../pages/QuanLyDaoTao/XemEmail";
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -23,6 +32,15 @@ export const router = createBrowserRouter([
       { path: "/bangcap", element: <BangCapList /> },
       { path: "/bangcap/form", element: <BangCapFormPage /> },
       { path: "/bangcap/view/:id", element: <BangCapDetail /> },
+      { path: "daotao", element: <DaoTaoList /> },
+      { path: "daotao/form", element: <DaoTaoFormPage /> },
+      { path: "daotao/thamgia/:id", element: <DaoTaoDetail /> },
+      { path: "dmdaotao", element: <DMDaoTaoList /> },
+      { path: "dmdaotao/form", element: <DMDaoTaoFormPage /> },
+      { path: "daotao/thamgia/:id/form", element: <CanBoFormPage /> },
+      { path: "daotao/thamgia/:id/print", element: <InDanhSachCanBo /> },
+      { path: "daotao/thamgia/:id/send", element: <GuiEmail /> },
+      { path: "user/emails", element: <XemEmail /> },
     ],
   },
   { path: "/login", element: <Login /> },
