@@ -9,7 +9,8 @@ const InDanhSachCanBo = () => {
   const [thamGiaList, setThamGiaList] = useState([]);
 
   useEffect(() => {
-    api.getThamGiaByMaCT(id)
+    api
+      .getThamGiaByMaCT(id)
       .then((res) => setThamGiaList(res.data))
       .catch(() => setThamGiaList([]));
   }, [id]);
@@ -37,7 +38,8 @@ const InDanhSachCanBo = () => {
             (Kèm theo Công văn số: 144/ĐT-KH ngày 12/5/2025 của Phòng Đào tạo)
           </div>
           <div className="text-left font-bold mb-2">
-            2. Lớp {thamGiaList[0]?.TenCT || "..."} : {thamGiaList.length} đồng chí
+            2. Lớp {thamGiaList[0]?.TenCT || "..."} : {thamGiaList.length} đồng
+            chí
           </div>
           <table className="w-full border text-sm mb-4">
             <thead className="bg-gray-100">

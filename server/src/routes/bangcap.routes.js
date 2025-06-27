@@ -1,6 +1,6 @@
 //server/src/routes/daotao.routes.js
 const router = require("express").Router();
-const ctrl = require("../controllers/daotao.controller");
+const ctrl = require("../controllers/bangcap.controller");
 const { authenticate, authorize } = require("../middlewares/auth");
 
 router.get("/", authenticate, authorize("ADMIN", "GiangVien"), ctrl.getAll);

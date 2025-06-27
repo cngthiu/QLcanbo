@@ -84,23 +84,23 @@ const LyLichUpdate = () => {
 
   const handleSubmit = async () => {
     const requiredFields = [
-    "HoTenKhaiSinh",
-    "HoTenThuongDung",
-    "CapBac",
-    "MaDV",
-    "GioiTinh",
-    "ChucVu",
-    "NgaySinh",
-    "NgayNhapNgu",
-    "SoCCCD",
-  ];
+      "HoTenKhaiSinh",
+      "HoTenThuongDung",
+      "CapBac",
+      "MaDV",
+      "GioiTinh",
+      "ChucVu",
+      "NgaySinh",
+      "NgayNhapNgu",
+      "SoCCCD",
+    ];
 
-  for (const field of requiredFields) {
-    if (!form[field] || form[field].trim() === "") {
-      toast.error("Vui lòng nhập đầy đủ các trường bắt buộc *");
-      return;
+    for (const field of requiredFields) {
+      if (!form[field] || String(form[field]).trim() === "") {
+        toast.error("Vui lòng nhập đầy đủ các trường bắt buộc *");
+        return;
+      }
     }
-  }
     try {
       const processedForm = { ...form };
 
@@ -143,11 +143,7 @@ const LyLichUpdate = () => {
           </div>
           <div>
             <Label>Bí danh</Label>
-            <Input
-              name="BiDanh"
-              value={form.BiDanh}
-              onChange={handleChange}
-            />
+            <Input name="BiDanh" value={form.BiDanh} onChange={handleChange} />
           </div>
           <div>
             <Label>
@@ -158,7 +154,6 @@ const LyLichUpdate = () => {
               value={form.CapBac}
               onChange={handleChange}
               className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-
             >
               <option value="">-- Chọn --</option>
               <option value="Thiếu úy">Thiếu úy</option>
@@ -184,7 +179,6 @@ const LyLichUpdate = () => {
               value={form.MaDV}
               onChange={handleChange}
               className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-
             >
               <option value="">-- Chọn --</option>
               {donViList.map((dv) => (
@@ -271,7 +265,6 @@ const LyLichUpdate = () => {
               value={form.LyLuanCT}
               onChange={handleChange}
               className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-
             >
               <option value="">-- Chọn --</option>
               <option value="Cử nhân">Cử nhân</option>
@@ -291,7 +284,6 @@ const LyLichUpdate = () => {
               value={form.CongTacDangLam}
               onChange={handleChange}
               className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-
             >
               <option value="">-- Chọn --</option>
               <option value="Chỉ huy - TM">Chỉ huy - TM</option>
@@ -324,7 +316,6 @@ const LyLichUpdate = () => {
               value={form.GioiTinh}
               onChange={handleChange}
               className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-
             >
               <option value="">-- Chọn --</option>
               <option value="Nam">Nam</option>

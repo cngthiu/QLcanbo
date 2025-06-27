@@ -81,6 +81,44 @@ CREATE TABLE CanBo (
     [NgaySua] [datetime] NULL,
 	FOREIGN KEY (MaDV) REFERENCES DonVi(MaDV)
 );
+CREATE TABLE ThanNhan (
+  MaTN INT PRIMARY KEY IDENTITY(1,1),     
+  HoTen NVARCHAR(50),               
+  NamSinh INT,                      
+  GioiTinh NVARCHAR(3),             
+  QuanHe NVARCHAR(20),            
+  NgheNghiep NVARCHAR(50),        
+  QueQuan NVARCHAR(50),             
+  NoiTamTru NVARCHAR(50),           
+  MaCB INT,                        
+  FOREIGN KEY (MaCB) REFERENCES CanBo(MaCB) ON DELETE CASCADE
+);
+--đơn xin nghỉ phép
+CREATE TABLE DonXinNghiPhep (
+  MaDon INT PRIMARY KEY IDENTITY(1,1),
+  NgayDon DATE,
+  LyDo NVARCHAR(100),
+  TuNgay DATE,
+  DenNgay DATE,
+  TuGio NVARCHAR(15),
+  DenGio NVARCHAR(15),
+  DiaChi NVARCHAR(50),
+  TrangThai NVARCHAR(50),
+  NoiNhan INT,
+  MaCB INT,
+  NgayTao DATETIME,
+  NgayDuyet DATETIME,
+  FOREIGN KEY (MaCB) REFERENCES CanBo(MaCB) ON DELETE CASCADE,
+  FOREIGN KEY (NoiNhan) REFERENCES DonVi(MaDV)
+);
+--Giấy nghỉ phép
+CREATE TABLE GiayNghiPhep (
+  MaGiay INT PRIMARY KEY IDENTITY(1,1),
+  SoQD INT,
+  Ngay DATE,
+  MaDon INT,
+  FOREIGN KEY (MaDon) REFERENCES DonXinNghiPhep(MaDon)
+);
 -- BẢNG QUÁ TRÌNH CÔNG TÁC
 CREATE TABLE QuaTrinhCongTac (
     MaQTCT INT IDENTITY(1,1) PRIMARY KEY,
@@ -649,17 +687,24 @@ INSERT INTO [User] (Username, Email, Password, FullName, UserType, NoiDungEmail)
  VALUES ('admin1', null, N'$2b$10$CkBKz1CiMntvIe3XjVvJ8Or63odPg5dKo5Wi0QFHdaTimZXBaFhsa',N'Vu Cong Thieu',N'Giang Vien', null);
 INSERT INTO Role_User (UserId, roleId, isActive ) VALUES (1,1,1);
 ----------------------------------- END CHUNG -------------------------
-INSERT INTO DonVi (TenDV)
-VALUES 
+INSERT INTO DonVi (TenDV) VALUES
+(N'Tiểu đoàn 1'),
+(N'Tiểu đoàn 2'),
+(N'Đại đội 157'),
 (N'Khoa Công nghệ thông tin'),
 (N'Khoa Điện tử viễn thông'),
 (N'Phòng Đào Tạo'),
 (N'Phòng Tổ chức cán bộ'),
 (N'Bộ môn Công nghệ phần mềm'),
 (N'Bộ môn Hệ thống thông tin'),
-(N'Tiểu đoàn 1'),
-(N'Tiểu đoàn 2'),
-(N'Đại đội 157');
+(N'Phòng Tham Mưu'),
+(N'Phòng Hậu Cần'),
+(N'Phòng Chính Trị'),
+(N'Đại Đội Trinh Sát'),
+(N'Phòng Kỹ Thuật'),
+(N'Ban Chỉ Huy'),
+(N'Phòng Tài Chính'),
+(N'Viện mô phỏng');
 
 INSERT INTO CanBo (
   HoTenKhaiSinh, HoTenThuongDung, BiDanh, CapBac, MaDV, GioiTinh, ChucVu, NgaySinh,
@@ -689,11 +734,11 @@ INSERT INTO CanBo (
  N'Thái Bình', N'Không', N'Nhân viên hành chính', '2014-03-01', '2010-03-10', N'Chi bộ 2', N'Hội phụ nữ',
  N'Nhân sự', N'Tiếng Anh', N'Cử nhân', CONVERT(DATE, GETDATE()), CONVERT(DATE, GETDATE()));
 
-INSERT INTO QuaTrinhCongTac (MaCB, ChucVu, ThoiGianBatDau, ThoiGianKetThuc)
-VALUES 
-(1, N'Giảng viên', '2015-09-01', null),
-(2, N'Phó trưởng khoa', '2021-01-01', NULL),
-(3, N'Trưởng bộ môn', '2017-07-01', null);
+INSERT INTO QuaTrinhCongTac (MaCB, ChucVu, DonVi, ThoiGianBatDau, ThoiGianKetThuc, QuyetDinhSo, NgayQuyetDinh, CoQuanBanHanh, NoiDungCongViec, NguoiTao) VALUES 
+(1, N'Giảng viên', N'Khoa CNTT', '2015-09-01', NULL, N'123/QĐ-HVKTQS', '2015-08-20', N'Học viện KTQS', N'Giảng dạy các môn chuyên ngành CNTT', 1),
+(2, N'Phó trưởng khoa', N'Khoa CNTT', '2021-01-01', NULL, N'125/QĐ-HVKTQS', '2020-12-20', N'Học viện KTQS', N'Phụ trách đào tạo và NCKH', 1),
+(3, N'Trưởng bộ môn', N'Bộ môn Viễn thông', '2017-07-01', NULL, N'127/QĐ-HVKTQS', '2017-06-20', N'Học viện KTQS', N'Quản lý bộ môn và đào tạo', 1),
+(4, N'Trưởng phòng', N'Phòng Tổ chức cán bộ', '2020-01-01', NULL, N'101/QĐ-HVKTQS', '2019-12-20', N'Học viện KTQS', N'Quản lý toàn diện công tác cán bộ', 1);
 
 INSERT INTO Loai_BC (LoaiBangCap)
 VALUES 
@@ -707,14 +752,44 @@ VALUES
 (1, 1, null, N'SHV001', N'Công nghệ phần mềm', '2008', N'Đại học Bách Khoa', N'Chính quy', '2008-06-01', null, N'Đã duyệt'),
 (2, 2, null, N'SHV002', N'Viễn thông', '2012', N'ĐH Bách Khoa Hà Nội', N'Văn bằng 2', '2012-06-01', null, N'Chờ duyệt'),
 (3, 3, null, N'CC223344', N'Trí tuệ nhân tạo', '2015', N'ĐH CNTT TPHCM', N'Chứng chỉ', '2015-06-01', null, N'Bị từ chối');
-INSERT INTO HocPhan (TenMonHoc, SoTinChi, SoTiet, NgayBatDau, NgayKetThuc, HinhThucThi)
-VALUES 
-(N'Lập trình Python', '3', '45', '2024-01-15', '2024-05-15', N'Trắc nghiệm'),
-(N'Thiết kế mạch số', '3', '45', '2024-02-01', '2024-06-01', N'Thực hành'),
-(N'Trí tuệ nhân tạo', '4', '60', '2024-03-01', '2024-07-01', N'Viết');
+INSERT INTO MonHoc (MaGV, TenMonHoc, SoTinChi, SoTiet, NgayBatDau, NgayKetThuc, HinhThuc, GhiChu) VALUES 
+(2, 'Cơ sở dữ liệu', 3, 45, '2025-01-15', '2025-05-30', 'Lý thuyết', 'BTL'),
+  (2, 'Kỹ thuật lập trình', 3, 45, '2025-01-15', '2025-05-30', 'Lý thuyết', null),
+  (3, 'Kinh tế chính trị', 3, 60, '2025-01-15', '2025-05-30', 'Lý thuyết', 'Vấn đáp TL'),
+  (4, 'Toán rời rạc', 3, 45, '2025-01-15', '2025-05-30', 'Lý thuyết', 'Viết');
+   INSERT INTO HocPhan (TenMonHoc, SoTinChi, SoTiet, NgayBatDau, NgayKetThuc, HinhThucThi, GhiChu) VALUES 
+  ('CSKT Điện tử quân sự', '3', '45', '2025-03-03','2025-04-18', 'Viết', null),
+  ('TH Điện tử cơ bản', '3', '60', '2025-04-21','2025-05-16', 'Viết', 'Thực hành tại Lab DT01'),
+	(N'Lập trình Python', '3', '45', '2024-01-15', '2024-05-15', N'Trắc nghiệm',null),
+	(N'Thiết kế mạch số', '3', '45', '2024-02-01', '2024-06-01', N'Thực hành',null),
+	(N'Trí tuệ nhân tạo', '4', '60', '2024-03-01', '2024-07-01', N'Viết',null);
+
+   INSERT INTO HocPhan (TenMonHoc, SoTinChi, SoTiet, NgayBatDau, NgayKetThuc, HinhThucThi, GhiChu) VALUES 
+  ('CSKT Điện tử quân sự', '3', '45', '2025-03-03','2025-04-18', 'Viết', null),
+  ('TH Điện tử cơ bản', '3', '60', '2025-04-21','2025-05-16', 'Viết', 'Thực hành tại Lab DT01'),
+	(N'Lập trình Python', '3', '45', '2024-01-15', '2024-05-15', N'Trắc nghiệm',null),
+	(N'Thiết kế mạch số', '3', '45', '2024-02-01', '2024-06-01', N'Thực hành',null),
+	(N'Trí tuệ nhân tạo', '4', '60', '2024-03-01', '2024-07-01', N'Viết',null);
+insert into TienDoDeTai (MaDT,MocThoiGian,NoiDung,TrangThai,KetQua,KhoKhan) values 
+(1,'2025-3-4','Khảo sát thực trạng quản lý tại các HVQS','Đã hoàn thành','Thu thập dữ liệu từ 5 học viên',null);
+
+insert into TaiChinhDeTai (MaDT,TenKhoanChi, LoaiChiPhi,DuToan,ThucChi,NgayChi,TrangThai,GhiChu,NguoiThucHien,FileHoaDon) values 
+(1,'Chi phí nhân sự giai đoạn 1','Nhân công',100000000,95000000,'2025-02-12','Đã quyết toán',null,2,null),
+(2,'Mua thiết bị AI','Vật tư',150000000,145000000,'2025-03-04','Đã quyết toán',null,2,null);
+	
+
+-- Giả sử bảng CanBo có MaCB INT IDENTITY(1,1)
+DELETE FROM DeTai;
+DBCC CHECKIDENT ('DeTai', RESEED, 0);
+
 INSERT INTO DeTai (TenDeTai, LinhVuc, KinhPhiDK, CapQuanLy, NgayBatDau, NgayKetThucDK, TrangThai, MucTieu, DonViChuTri)
 VALUES 
-(N'Ứng dụng AI trong giáo dục', N'Trí tuệ nhân tạo', 20000000, N'Cấp trường', '2024-01-01', '2024-12-31', N'Chưa bắt đầu', N'Tối ưu hóa hệ thống quản lý học tập', 1),
-(N'Phân tích dữ liệu lớn', N'Khoa học dữ liệu', 30000000, N'Cấp bộ', '2024-02-01', '2024-12-31', N'Đang nghiên cứu', N'Tăng tốc xử lý big data', 2),
-(N'Bảo mật hệ thống mạng quân sự', N'An toàn thông tin', 50000000, N'Cấp nhà nước', '2024-03-01', '2025-03-01', N'Hoàn thành nghiên cứu', N'Đảm bảo an ninh thông tin mạng', 3);
+(N'Ứng dụng trí tuệ nhân tạo trong giảng dạy', 'Công nghệ thông tin - GD',250000000,'Cấp bộ', '2025-01-01','2025-12-31','Đang nghiên cứu','Ứng dụng trí tuệ nhân tạo trong giảng dạy và học tập',4),
+(N'Ứng dụng AI trong giáo dục', N'Trí tuệ nhân tạo', 20000000000, N'Cấp trường', '2024-01-01', '2024-12-31', N'Chưa bắt đầu', N'Tối ưu hóa hệ thống quản lý học tập', 8),
+(N'Phân tích dữ liệu lớn', N'Khoa học dữ liệu', 30000000000, N'Cấp bộ', '2024-02-01', '2024-12-31', N'Đang nghiên cứu', N'Tăng tốc xử lý big data', 9),
+(N'Bảo mật hệ thống mạng quân sự', N'An toàn thông tin', 50000000000, N'Cấp nhà nước', '2024-03-01', '2025-03-01', N'Hoàn thành nghiên cứu', N'Đảm bảo an ninh thông tin mạng', 4);
 
+ INSERT INTO KeHoachGiangDay (MaHP, MaBoMon, NamHoc, Lop, HocKy, NganhDaoTao, MaNguoiTao, TrangThai, NgayTao, MaNguoiDuyet, NgayDuyet, MaGV) VALUES 
+  (1, 5, '2024-2025', 'VK-1', '2', 'Kỹ thuật điện tử vũ khí',1, 'Đã duyệt', '2025-02-11 12:00:00',2,'2025-02-14',1);
+ INSERT INTO KeHoachGiangDay (MaHP, MaBoMon, NamHoc, Lop, HocKy, NganhDaoTao, MaNguoiTao, TrangThai, NgayTao, MaNguoiDuyet, NgayDuyet, MaGV) VALUES 
+  (1, 5, '2024-2025', 'VK-1', '2', 'Kỹ thuật điện tử vũ khí',1, 'Đã duyệt', '2025-02-11 12:00:00',2,'2025-02-14',1);
