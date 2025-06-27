@@ -8,6 +8,7 @@ const UserFormDialog = ({ user, onSuccess }) => {
   const [formData, setFormData] = useState({
     UserName: '',
     Email: '',
+    FullName: '',
     PassWord: '',
     RoleId: '',
   });
@@ -18,7 +19,7 @@ const UserFormDialog = ({ user, onSuccess }) => {
     if (user) {
       setFormData({ ...user, PassWord: '', RoleId: user.RoleId });
     } else {
-      setFormData({ UserName: '', Email: '', PassWord: '', RoleId: '' });
+      setFormData({ UserName: '', Email: '', FullName: '', PassWord: '', RoleId: '' });
     }
   }, [user]);
 
@@ -35,6 +36,7 @@ const UserFormDialog = ({ user, onSuccess }) => {
   };
 
   const handleSubmit = async () => {
+    console.log('Dữ liệu gửi đi từ form:', formData);
     try {
       if (user) {
         await api.put(`/users/${user.UserId}`, formData);
@@ -42,7 +44,8 @@ const UserFormDialog = ({ user, onSuccess }) => {
         await api.post('/users', formData);
       }
       onSuccess();
-    } catch (err) {
+    } catch (error) {
+      console.error('Lỗi khi lưu người dùng!', error)
       alert('Lỗi khi lưu người dùng!');
     }
   };
@@ -63,6 +66,14 @@ const UserFormDialog = ({ user, onSuccess }) => {
           name="Email"
           type="email"
           value={formData.Email}
+          onChange={handleChange}
+        />
+      </div>
+      <div>
+        <Label htmlFor="FullName">Tên người dùng</Label>
+        <Input
+          name="FullName"
+          value={formData.FullName}
           onChange={handleChange}
         />
       </div>

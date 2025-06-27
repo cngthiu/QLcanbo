@@ -16,7 +16,7 @@ exports.login = async (req, res) => {
     { expiresIn: "24h" }
   );
 
-  res.json({ token, role: roles[0]?.roleName });
+  res.json({ token, role: roles[0]?.roleName, userId: user.UserId });
 };
 exports.getProfile = async (req, res) => {
   try {
