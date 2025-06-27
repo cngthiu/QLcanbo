@@ -11,7 +11,8 @@ const GuiEmail = () => {
   const [selectedDonVi, setSelectedDonVi] = useState([]);
 
   useEffect(() => {
-    api.getThamGiaByMaCT(id)
+    api
+      .getThamGiaByMaCT(id)
       .then((res) => setThamGiaList(res.data))
       .catch(() => setThamGiaList([]));
   }, [id]);
@@ -32,7 +33,7 @@ const GuiEmail = () => {
       return;
     }
     try {
-      const emailContent = document.querySelector('.print-area')?.innerHTML;
+      const emailContent = document.querySelector(".print-area")?.innerHTML;
       console.log("Nội dung email sẽ gửi:", emailContent);
       if (!emailContent) {
         toast.error("Không tìm thấy nội dung email để gửi.");
@@ -43,7 +44,10 @@ const GuiEmail = () => {
       navigate(-1);
     } catch (error) {
       console.error("Lỗi khi gửi email:", error);
-      toast.error("Gửi email thất bại: " + (error.response?.data?.message || error.message));
+      toast.error(
+        "Gửi email thất bại: " +
+          (error.response?.data?.message || error.message)
+      );
     }
   };
 
@@ -55,7 +59,7 @@ const GuiEmail = () => {
     }
   };
 
-  const uniqueDonVi = [...new Set(thamGiaList.map(cb => cb.TenDV))];
+  const uniqueDonVi = [...new Set(thamGiaList.map((cb) => cb.TenDV))];
   const info = thamGiaList.length > 0 ? thamGiaList[0] : null;
 
   const formatDate = (dateString) => {
@@ -82,18 +86,24 @@ const GuiEmail = () => {
       </h1>
       <div className="flex gap-8 items-start">
         {/* Cột trái: Công văn + bảng */}
-        <div className="print-area border bg-white p-6" style={{ minWidth: 500, maxWidth: 600 }}>
+        <div
+          className="print-area border bg-white p-6"
+          style={{ minWidth: 500, maxWidth: 600 }}
+        >
           <div className="flex justify-between items-start mb-4">
             <div className="w-1/2 text-center">
               <div className="text-xs font-bold leading-tight">
-                HỌC VIỆN KỸ THUẬT QUÂN SỰ<br />
-                <span className="font-extrabold">PHÒNG ĐÀO TẠO</span><br />
+                HỌC VIỆN KỸ THUẬT QUÂN SỰ
+                <br />
+                <span className="font-extrabold">PHÒNG ĐÀO TẠO</span>
+                <br />
                 Số: 144/ĐT-KH
               </div>
             </div>
             <div className="w-1/2 text-center">
               <div className="text-xs font-bold leading-tight">
-                CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM<br />
+                CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM
+                <br />
                 Độc lập - Tự do - Hạnh phúc
               </div>
             </div>
@@ -101,11 +111,14 @@ const GuiEmail = () => {
           <div className="flex justify-between items-start text-xs mt-4">
             <div className="w-1/2 text-center">
               <p>
-                V/v cho phép cán bộ tham gia các khóa đào tạo và các lớp chứng chỉ
+                V/v cho phép cán bộ tham gia các khóa đào tạo và các lớp chứng
+                chỉ
               </p>
             </div>
             <div className="w-1/2 text-center italic">
-              <p>{`Hà Nội, ngày ${new Date().getDate()} tháng ${new Date().getMonth() + 1} năm ${new Date().getFullYear()}`}</p>
+              <p>{`Hà Nội, ngày ${new Date().getDate()} tháng ${
+                new Date().getMonth() + 1
+              } năm ${new Date().getFullYear()}`}</p>
             </div>
           </div>
           <div className="text-xs font-bold mb-2 flex justify-center">
@@ -114,36 +127,57 @@ const GuiEmail = () => {
                 <div className="row-span-full self-start">Kính gửi:</div>
                 <div className="col-start-2">- Thủ trưởng {uniqueDonVi[0]}</div>
                 {uniqueDonVi.slice(1).map((tenDV, index) => (
-                  <div key={index} className="col-start-2">- Thủ trưởng {tenDV}</div>
+                  <div key={index} className="col-start-2">
+                    - Thủ trưởng {tenDV}
+                  </div>
                 ))}
               </div>
             )}
           </div>
           <div className="text-xs mb-2">
             <p className="indent-8 mb-2">
-              Căn cứ vào Kế hoạch số 01/KH-HV ngày 11/1/2000 của Học viện về tổ chức các khóa đào tạo ngắn hạn và chứng chỉ quốc tế cho cán bộ, giảng viên.
+              Căn cứ vào Kế hoạch số 01/KH-HV ngày 11/1/2000 của Học viện về tổ
+              chức các khóa đào tạo ngắn hạn và chứng chỉ quốc tế cho cán bộ,
+              giảng viên.
             </p>
             <p className="indent-8 mb-2">
-              Căn cứ Quyết định số 100/QĐ-HV ngày 12/10/2010 của Giám đốc Học viện phê duyệt Kết quả lựa chọn nhà thầu gói thầu: Đào tạo và thi chứng chỉ quốc tế.
+              Căn cứ Quyết định số 100/QĐ-HV ngày 12/10/2010 của Giám đốc Học
+              viện phê duyệt Kết quả lựa chọn nhà thầu gói thầu: Đào tạo và thi
+              chứng chỉ quốc tế.
             </p>
             <p className="indent-8">
-              Để nâng cao năng lực cho cán bộ, giảng viên trong toàn Học viện, Phòng Đào tạo đề nghị các đơn vị cho phép các đồng chí cán bộ có tên sau được tham gia khóa học đào tạo:
+              Để nâng cao năng lực cho cán bộ, giảng viên trong toàn Học viện,
+              Phòng Đào tạo đề nghị các đơn vị cho phép các đồng chí cán bộ có
+              tên sau được tham gia khóa học đào tạo:
             </p>
             <p className="text-center ">(Có Danh sách kèm theo)</p>
           </div>
           <div className="text-xs mb-2">
             <p className="indent-8 mb-2">
-              Các khóa học ngắn hạn được tổ chức tại Học viện, hình thức đào tạo trực tiếp hoặc trực tuyến. Thời lượng mỗi khóa khoảng 60 buổi học và 01 buổi thi.
+              Các khóa học ngắn hạn được tổ chức tại Học viện, hình thức đào tạo
+              trực tiếp hoặc trực tuyến. Thời lượng mỗi khóa khoảng 60 buổi học
+              và 01 buổi thi.
             </p>
             <p className="indent-8">
-              Thời gian tổ chức dự kiến từ tháng {formatDate(info?.NgayBatDau)} đến tháng {formatDate(info?.NgayKetThuc)}. Tại {info?.DiaDiem}. Khi có lịch đi học chính thức, Phòng đào tạo sẽ có thông báo cụ thể sau.
+              Thời gian tổ chức dự kiến từ tháng {formatDate(info?.NgayBatDau)}{" "}
+              đến tháng {formatDate(info?.NgayKetThuc)}. Tại {info?.DiaDiem}.
+              Khi có lịch đi học chính thức, Phòng đào tạo sẽ có thông báo cụ
+              thể sau.
             </p>
           </div>
           <div className="text-xs mb-2 indent-8">
             Phòng Đào tạo xin trân trọng cảm ơn !
           </div>
           <div className="flex text-xs mt-4 mb-2">
-            <div className="w-1/2 pl-[40px] text-[10px]">Nơi nhận:<br />-P1, V4<br />-d1, d3<br />-Lưu: P2</div>
+            <div className="w-1/2 pl-[40px] text-[10px]">
+              Nơi nhận:
+              <br />
+              -P1, V4
+              <br />
+              -d1, d3
+              <br />
+              -Lưu: P2
+            </div>
             <div className="w-1/2 text-center font-bold">TRƯỞNG PHÒNG</div>
           </div>
           <br />
@@ -154,7 +188,8 @@ const GuiEmail = () => {
               CÁN BỘ, GIẢNG VIÊN THAM GIA KHÓA ĐÀO TẠO VÀ THI CHỨNG CHỈ
             </div>
             <div className="text-center text-xs mb-2">
-              (Kèm theo Công văn số: 144/ĐT-KH ngày {formatDate(new Date())} của Phòng Đào tạo)
+              (Kèm theo Công văn số: 144/ĐT-KH ngày {formatDate(new Date())} của
+              Phòng Đào tạo)
             </div>
             <div className="text-left font-bold text-xs mb-2">
               1. Lớp {info?.TenCT || "..."} : {thamGiaList.length} đồng chí
@@ -195,7 +230,10 @@ const GuiEmail = () => {
                   <input
                     type="checkbox"
                     onChange={handleSelectAll}
-                    checked={uniqueDonVi.length > 0 && selectedDonVi.length === uniqueDonVi.length}
+                    checked={
+                      uniqueDonVi.length > 0 &&
+                      selectedDonVi.length === uniqueDonVi.length
+                    }
                     className="accent-blue-600"
                   />
                 </td>
@@ -213,7 +251,10 @@ const GuiEmail = () => {
                     />
                   </td>
                   <td className="py-1">
-                    <label htmlFor={`donvi-checkbox-${index}`} className="cursor-pointer block w-full">
+                    <label
+                      htmlFor={`donvi-checkbox-${index}`}
+                      className="cursor-pointer block w-full"
+                    >
                       {tenDV}
                     </label>
                   </td>
