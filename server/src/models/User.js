@@ -8,7 +8,12 @@ const User = sequelize.define(
     UserId: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     UserName: { type: DataTypes.STRING, allowNull: false },
     Email: { type: DataTypes.STRING },
+    FullName: { type: DataTypes.STRING },
     PassWord: { type: DataTypes.STRING, allowNull: false },
+    NoiDungEmail: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
     createDate: {
       type: DataTypes.DATE,
       defaultValue: sequelize.literal("GETDATE()"),

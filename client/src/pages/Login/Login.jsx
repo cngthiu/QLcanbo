@@ -12,7 +12,7 @@ const Login = () => {
   const handleLogin = async () => {
     try {
       const res = await api.post("/auth/login", { username, password });
-      setAuth(res.data.token, res.data.role);
+      setAuth(res.data.token, res.data.role, res.data.userId);
       navigate("/");
     } catch (err) {
       alert("Sai thông tin đăng nhập");
