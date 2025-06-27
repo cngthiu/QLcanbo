@@ -21,7 +21,7 @@ const Sidebar = () => {
   }, []);
   const navItems = [
     { path: "/users", label: "Quản lý tài khoản" },
-    { path: "/", label: "Quản lý thông tin cá nhân" },
+    { path: "/canbo", label: "Quản lý thông tin cá nhân" },
     { path: "/", label: "Quản lý thân nhân" },
     { path: "/", label: "Quản lý  nghỉ phép" },
     { path: "/", label: "Quản lý đào tạo cán bộ" },
@@ -30,7 +30,7 @@ const Sidebar = () => {
     { path: "/", label: "Quản lý quá trình công tác" },
     { path: "/", label: "Quản lý hồ sơ chính trị và đảng viên" },
     { path: "/", label: "Quản lý biến động nhân sự" },
-    { path: "/", label: "Quản lý đào tạo cán bộ" },
+    { path: "/daotao", label: "Quản lý đào tạo cán bộ" },
     { path: "/bangcap", label: "Quản lý trình độ chuyên môn" },
     { path: "/", label: "Quản lý hoạt động giảng dạy" },
     { path: "/", label: "Quản lý hoạt động NCKH" },

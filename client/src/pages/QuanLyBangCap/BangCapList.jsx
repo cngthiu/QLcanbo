@@ -15,6 +15,7 @@ import ConfirmDialog from "../../components/ConfirmDialog";
 import BangCapLichSuDialog from "../../components/BangCapLichSuDialog";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import Pagination from "../../components/Pagination";
 
 const statusClass = {
   "Đã duyệt": "text-green-600 font-medium",
@@ -32,6 +33,10 @@ const BangCapList = () => {
   const [donViList, setDonViList] = useState([]);
   const [loaiBangList, setLoaiBangList] = useState([]);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
+
   const navigate = useNavigate();
 
   const fetchBangCap = async () => {
@@ -42,6 +47,10 @@ const BangCapList = () => {
       console.error("Lỗi lấy dữ liệu:", err);
     }
   };
+
+  const handlePageChange = (page) => {
+  setCurrentPage(page);
+};
 
   const handleDeleteClick = (id) => {
     setIdToDelete(id);
@@ -212,6 +221,14 @@ const BangCapList = () => {
           onClose={() => setOpenHistory(false)}
         />
       )}
+
+      <div className="mt-4 flex justify-end">
+        <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
+      </div>
     </div>
   );
 };
