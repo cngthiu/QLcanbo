@@ -8,6 +8,12 @@ import UserList from "../pages/UserList";
 import BangCapList from "../pages/QuanLyBangCap/BangCapList";
 import BangCapFormPage from "../pages/QuanLyBangCap/BangCapFormPage";
 import BangCapDetail from "@/pages/QuanLyBangCap/BangCapDetail";
+
+import LyLich from "../pages/QuanLyTTCaNhan/LyLich";
+import LyLichAdd from "../pages/QuanLyTTCaNhan/LyLichAdd";
+import LyLichDetail from "../pages/QuanLyTTCaNhan/LyLichDetail";
+import LyLichUpdate from "../pages/QuanLyTTCaNhan/LyLichUpdate";
+
 import DaoTaoList from "../pages/QuanLyDaoTao/DaoTaoList";
 import DaoTaoFormPage from "../pages/QuanLyDaoTao/DaoTaoFormPage";
 import DaoTaoDetail from "../pages/QuanLyDaoTao/DaoTaoDetail";
@@ -17,6 +23,7 @@ import CanBoFormPage from "../pages/QuanLyDaoTao/CanBoFormPage";
 import InDanhSachCanBo from "../pages/QuanLyDaoTao/InDanhSachCanBo";
 import GuiEmail from "../pages/QuanLyDaoTao/GuiEmail";
 import XemEmail from "../pages/QuanLyDaoTao/XemEmail";
+
 
 export const router = createBrowserRouter([
   {
@@ -32,6 +39,10 @@ export const router = createBrowserRouter([
       { path: "/bangcap", element: <BangCapList /> },
       { path: "/bangcap/form", element: <BangCapFormPage /> },
       { path: "/bangcap/view/:id", element: <BangCapDetail /> },
+      { path: "/canbo", element: <LyLich /> },
+      { path: "/canbo/form", element: <LyLichAdd /> },
+      { path: "/canbo/view/:id", element: <LyLichDetail /> },
+      { path: "/canbo/update/:id", element: <LyLichUpdate /> },
       { path: "daotao", element: <DaoTaoList /> },
       { path: "daotao/form", element: <DaoTaoFormPage /> },
       { path: "daotao/thamgia/:id", element: <DaoTaoDetail /> },
