@@ -1,8 +1,8 @@
-CREATE DATABASE QLcanbo;
 
+-- Phan 1: Create Table 
+CREATE DATABASE QLcanbo1;
 USE QLcanbo;
-GO
-
+------------------------------------- ROLE -----------------------------------------
 CREATE TABLE Role (
 	roleId INT IDENTITY(1,1) PRIMARY KEY,
 	roleName NVARCHAR(100) NOT NULL,
@@ -10,15 +10,15 @@ CREATE TABLE Role (
 );
 
 CREATE TABLE [User] (
-	UserId INT IDENTITY(1,1) PRIMARY KEY,
-	Username NVARCHAR(100) NOT NULL,
-	Email NVARCHAR(100),
-	Password NVARCHAR(100) NOT NULL,
-	createDate DATETIME DEFAULT GETDATE(),
-	FullName NVARCHAR(100),
-	UserType NVARCHAR(100)
+    UserId INT IDENTITY(1,1) PRIMARY KEY,
+    Username NVARCHAR(100) NOT NULL,
+    Email NVARCHAR(100) NULL,
+    Password NVARCHAR(100) NOT NULL,
+    createDate DATETIME DEFAULT GETDATE(),
+    FullName NVARCHAR(100) NULL,
+    UserType NVARCHAR(100) NULL,
+    NoiDungEmail NVARCHAR(MAX) NULL
 );
-
 CREATE TABLE Role_User (
 	UserId INT NOT NULL,
 	roleId INT NOT NULL,
@@ -27,64 +27,264 @@ CREATE TABLE Role_User (
 	FOREIGN KEY (UserId) REFERENCES [User](UserId),
 	FOREIGN KEY (roleId) REFERENCES Role(roleId)
 );
-
+--------------------------==THAM==------------------------------------------------
+-- Bảng đơn vị
 CREATE TABLE DonVi (
-	MaDV INT IDENTITY(1,1) PRIMARY KEY,
-	TenDV NVARCHAR(255)
+    MaDV INT IDENTITY(1,1) PRIMARY KEY,
+    TenDV NVARCHAR(255) NULL,
+    MoTa NVARCHAR(500)
 );
-
+-- Bang Can bo
 CREATE TABLE CanBo (
-	[MaCB] [int] IDENTITY(1,1) PRIMARY KEY,
-	[HoTenKhaiSinh] [nvarchar](50) NULL,
-	[HoTenThuongDung] [nvarchar](50) NULL,
-	[BiDanh] [nvarchar](50) NULL,
-	[GioiTinh] [nvarchar](3) NULL,
-	[CapBac] [nvarchar](20) NULL,
-	[ChucVu] [nvarchar](50) NULL,
-	[MaDV] [int] NULL,
-	[NgaySinh] [date] NULL,
-	[NoiSinh] [nvarchar](500) NULL,
-	[QueQuan] [nvarchar](500) NULL,
-	[NoiDKHK] [nvarchar](500) NULL,
-	[NoiTamTru] [nvarchar](500) NULL,
-	[DanToc] [nvarchar](15) NULL,
-	[TonGiao] [nvarchar](20) NULL,
-	[ThanhPhanGD] [nvarchar](50) NULL,
-	[NgheNghiep] [nvarchar](50) NULL,
-	[Ngayvaodang] [date] NULL,
-	[Ngaychinhthuc] [date] NULL,
-	[Chibo] [nvarchar](50) NULL,
-	[Ngayvaodoan] [date] NULL,
-	[Noiketnap] [nvarchar](50) NULL,
-	[Trangthaidang] [nvarchar](50) NULL,
-	[QuaTrinhPhanDau] [nvarchar](500) NULL,
-	[NgayNhapNgu] [date] NULL,
-	[NgayCongTac] [date] NULL,
-	[ThamGiaTCXH] [nvarchar](50) NULL,
-	[NgayThamGiaCM] [date] NULL,
-	[GDPT] [nvarchar](20) NULL,
-	[ChuyenMonNV] [nvarchar](50) NULL,
-	[LyLuanCT] [nvarchar](50) NULL,
-	[NgoaiNgu] [nvarchar](50) NULL,
-	[HocHam] [nvarchar](50) NULL,
-	[HocVi] [nvarchar](50) NULL,
-	[CongTacDangLam] [nvarchar](100) NULL,
-	[SoCCCD] [char](12) NULL,
-	[Anh] [image] NULL,
-	[TrangThai] [nvarchar](20) NULL,
-	[NgayTao] [datetime] NULL,
-	[NgaySua] [datetime] NULL,
+[MaCB] [int] IDENTITY(1,1) PRIMARY KEY,
+    [HoTenKhaiSinh] [nvarchar](50) NULL,
+    [HoTenThuongDung] [nvarchar](50) NULL,
+    [BiDanh] [nvarchar](50) NULL,
+    [GioiTinh] [nvarchar](3) NULL,
+    [CapBac] [nvarchar](20) NULL,
+    [ChucVu] [nvarchar](50) NULL,
+    [MaDV] [int] NULL,
+    [NgaySinh] [date] NULL,
+    [NoiSinh] [nvarchar](500) NULL,
+    [QueQuan] [nvarchar](500) NULL,
+    [NoiDKHK] [nvarchar](500) NULL,
+    [NoiTamTru] [nvarchar](500) NULL,
+    [DanToc] [nvarchar](15) NULL,
+    [TonGiao] [nvarchar](20) NULL,
+    [ThanhPhanGD] [nvarchar](50) NULL,
+    [NgheNghiep] [nvarchar](50) NULL,
+        -- THÔNG TIN ĐẢNG
+    [Ngayvaodang] [date] NULL,
+    [Ngaychinhthuc] [date] NULL,
+    [Chibo] [nvarchar](50) NULL,
+    [Ngayvaodoan] [date] NULL,
+    [Noiketnap] [nvarchar](50) NULL,
+    [Trangthaidang] [nvarchar](50) NULL,
+    [QuaTrinhPhanDau] [nvarchar](500) NULL,
+        -- THÔNG TIN QUÂN ĐỘI
+    [NgayNhapNgu] [date] NULL,
+    [NgayCongTac] [date] NULL,
+        -- THÔNG TIN KHÁC
+    [ThamGiaTCXH] [nvarchar](50) NULL,
+    [NgayThamGiaCM] [date] NULL,
+    [GDPT] [nvarchar](20) NULL,
+    [ChuyenMonNV] [nvarchar](50) NULL,
+    [LyLuanCT] [nvarchar](50) NULL,
+    [NgoaiNgu] [nvarchar](50) NULL,
+    [HocHam] [nvarchar](50) NULL,
+    [HocVi] [nvarchar](50) NULL,
+    [CongTacDangLam] [nvarchar](100) NULL,
+    [SoCCCD] [char](12) NULL,
+    [Anh] [image] NULL,
+    [TrangThai] [nvarchar](20) NULL,
+    [NgayTao] [datetime] NULL,
+    [NgaySua] [datetime] NULL,
 	FOREIGN KEY (MaDV) REFERENCES DonVi(MaDV)
 );
-
+-- BẢNG QUÁ TRÌNH CÔNG TÁC
 CREATE TABLE QuaTrinhCongTac (
-	MaQTCT INT IDENTITY(1,1) PRIMARY KEY,
-	MaCB INT NOT NULL,
-	ChucVu NVARCHAR(255),
-	ThoiGianBatDau DATE,
-	ThoiGianKetThuc DATE,
-	FOREIGN KEY (MaCB) REFERENCES CanBo(MaCB)
+    MaQTCT INT IDENTITY(1,1) PRIMARY KEY,
+    MaCB INT NOT NULL,
+    ChucVu NVARCHAR(100),
+    DonVi NVARCHAR(255),
+    ThoiGianBatDau DATE NOT NULL,
+    ThoiGianKetThuc DATE,
+    QuyetDinhSo NVARCHAR(100),
+    NgayQuyetDinh DATE,
+    CoQuanBanHanh NVARCHAR(255),
+    NoiDungCongViec NVARCHAR(MAX),
+    ThanhTichNoiBat NVARCHAR(MAX),
+    GhiChu NVARCHAR(500),
+    NguoiTao INT,
+    NgayTao DATETIME DEFAULT GETDATE(),
+    FOREIGN KEY (MaCB) REFERENCES CanBo(MaCB),
+    FOREIGN KEY (NguoiTao) REFERENCES CanBo(MaCB)
 );
+---------------------------------- Trung -------------------
+-- 1. TẠO BẢNG MucLuongCapBac
+CREATE TABLE [dbo].[MucLuongCapBac](
+    [MaMucLuong] [int] IDENTITY(1,1) NOT NULL,
+    [CapBac] [nvarchar](20) NOT NULL,
+    [BacLuong] [int] NOT NULL,
+    [HeSoLuong] [decimal](5, 2) NOT NULL,
+    [LuongCoBan] [decimal](18, 2) NOT NULL,
+    [NgayApDung] [date] NOT NULL,
+    [NgayKetThuc] [date] NULL,
+    [TrangThai] [nvarchar](20) NULL DEFAULT (N'Đang áp dụng'),
+    [GhiChu] [nvarchar](500) NULL,
+    PRIMARY KEY CLUSTERED ([MaMucLuong] ASC)
+);
+
+-- 2. TẠO BẢNG MucPhuCapChucVu
+CREATE TABLE [dbo].[MucPhuCapChucVu](
+    [MaPhuCap] [int] IDENTITY(1,1) NOT NULL,
+    [ChucVu] [nvarchar](50) NOT NULL,
+    [MucPhuCap] [decimal](18, 2) NOT NULL,
+    [HeSoPhuCap] [decimal](5, 2) NOT NULL,
+    [NgayApDung] [date] NOT NULL,
+    [NgayKetThuc] [date] NULL,
+    [TrangThai] [nvarchar](20) NULL DEFAULT (N'Đang áp dụng'),
+    [GhiChu] [nvarchar](500) NULL,
+    PRIMARY KEY CLUSTERED ([MaPhuCap] ASC)
+);
+
+-- 3. TẠO BẢNG BangLuong
+CREATE TABLE [dbo].[BangLuong](
+    [MaBL] [int] IDENTITY(1,1) NOT NULL,
+    [MaCB] [int] NOT NULL,
+    [ThangNam] [nvarchar](7) NOT NULL,
+    [LuongCoBan] [decimal](18, 2) NULL DEFAULT ((0)),
+    [PhuCapChucVu] [decimal](18, 2) NULL DEFAULT ((0)),
+    [PhuCapCapBac] [decimal](18, 2) NULL DEFAULT ((0)),
+    [PhuCapKhac] [decimal](18, 2) NULL DEFAULT ((0)),
+    [ThuongThang] [decimal](18, 2) NULL DEFAULT ((0)),
+    [KhauTru] [decimal](18, 2) NULL DEFAULT ((0)),
+    [ThucLanh] [decimal](18, 2) NULL DEFAULT ((0)),
+    [TrangThai] [int] NULL DEFAULT ((1)),
+    [NgayTao] [date] NULL DEFAULT (getdate()),
+    [NgayDuyet] [date] NULL,
+    [NgayChiTra] [date] NULL,
+    [MaNguoiTao] [int] NULL,
+    [MaNguoiDuyet] [int] NULL,
+    [GhiChu] [nvarchar](500) NULL,
+    PRIMARY KEY CLUSTERED ([MaBL] ASC)
+);
+
+-- 4. TẠO BẢNG LichSuLuong
+CREATE TABLE [dbo].[LichSuLuong](
+    [MaLichSu] [int] IDENTITY(1,1) NOT NULL,
+    [MaCB] [int] NOT NULL,
+    [CapBacCu] [nvarchar](20) NULL,
+    [CapBacMoi] [nvarchar](20) NULL,
+    [ChucVuCu] [nvarchar](50) NULL,
+    [ChucVuMoi] [nvarchar](50) NULL,
+    [LuongCu] [decimal](18, 2) NULL,
+    [LuongMoi] [decimal](18, 2) NULL,
+    [NgayThayDoi] [date] NOT NULL,
+    [LyDoThayDoi] [nvarchar](255) NULL,
+    [SoQuyetDinh] [nvarchar](50) NULL,
+    [NgayQuyetDinh] [date] NULL,
+    [NguoiThayDoi] [nvarchar](50) NULL,
+    [ThoiGianTao] [date] NULL DEFAULT (getdate()),
+    PRIMARY KEY CLUSTERED ([MaLichSu] ASC)
+);
+
+-- 5. TẠO BẢNG KeHoachKhamSucKhoe
+CREATE TABLE [dbo].[KeHoachKhamSucKhoe](
+    [MaKHKSK] [int] NOT NULL,
+    [TenKeHoach] [nvarchar](200) NULL,
+    [Nam] [int] NULL,
+    [DotKham] [int] NULL,
+    [NgayBatDau] [date] NULL,
+    [NgayKetThuc] [date] NULL,
+    [DiaDiem] [nvarchar](200) NULL,
+    [NoiDungKham] [nvarchar](1000) NULL,
+    [DonViToChuc] [nvarchar](200) NULL,
+    [TrangThai] [nvarchar](20) NULL,
+    [NgayTao] [date] NULL,
+    [GhiChu] [nvarchar](500) NULL,
+    [MaDV] [int] NULL,
+    [MaNguoiTao] [int] NULL,
+    PRIMARY KEY CLUSTERED ([MaKHKSK] ASC)
+);
+
+-- 6. TẠO BẢNG DanhSachKham
+CREATE TABLE [dbo].[DanhSachKham](
+    [MaDSK] [int] NOT NULL,
+    [TrangThaiThamGia] [nvarchar](20) NULL,
+    [NgayDangKy] [date] NULL,
+    [GhiChu] [nvarchar](500) NULL,
+    [MaKHKSK] [int] NULL,
+    [MaCB] [int] NULL,
+    PRIMARY KEY CLUSTERED ([MaDSK] ASC)
+);
+
+-- 7. TẠO BẢNG TongHopLuong
+CREATE TABLE [dbo].[TongHopLuong](
+    [MaTongHop] [int] IDENTITY(1,1) NOT NULL,
+    [MaDV] [int] NOT NULL,
+    [ThangNam] [nvarchar](7) NOT NULL,
+    [SoCanBo] [int] NULL DEFAULT ((0)),
+    [TongLuongCoBan] [decimal](18, 2) NULL DEFAULT ((0)),
+    [TongPhuCap] [decimal](18, 2) NULL DEFAULT ((0)),
+    [TongThuong] [decimal](18, 2) NULL DEFAULT ((0)),
+    [TongKhauTru] [decimal](18, 2) NULL DEFAULT ((0)),
+    [TongThucLanh] [decimal](18, 2) NULL DEFAULT ((0)),
+    [TrangThai] [nvarchar](20) NULL DEFAULT (N'Chưa hoàn thành'),
+    [NgayTao] [date] NULL DEFAULT (getdate()),
+    [NguoiTao] [nvarchar](50) NULL,
+    PRIMARY KEY CLUSTERED ([MaTongHop] ASC)
+);
+
+-- 8. TẠO CÁC BẢNG KHÁC (SỨC KHỎE)
+CREATE TABLE [dbo].[BaoCaoSucKhoe](
+    [MaBCSK] [int] NOT NULL,
+    [TenBaoCao] [nvarchar](200) NULL,
+    [LoaiBaoCao] [nvarchar](50) NULL,
+    [TuNgay] [date] NULL,
+    [DenNgay] [date] NULL,
+    [NoiDung] [nvarchar](1000) NULL,
+    [TrangThai] [nvarchar](20) NULL,
+    [NgayTao] [date] NULL,
+    [FileBaoCao] [nvarchar](500) NULL,
+    [MaDV] [int] NULL,
+    [MaNguoiTao] [int] NULL,
+    PRIMARY KEY CLUSTERED ([MaBCSK] ASC)
+);
+-- 9. Bang Bao Hiem Y te
+CREATE TABLE [dbo].[BaoHiemYTe](
+    [MaBHYT] [int] NOT NULL,
+    [SoTheBHYT] [nvarchar](20) NULL,
+    [NgayCapThe] [date] NULL,
+    [NgayHetHan] [date] NULL,
+    [NoiCapThe] [nvarchar](200) NULL,
+    [NoiDangKyKCB] [nvarchar](200) NULL,
+    [SoBaoHiemQuanDoi] [nvarchar](20) NULL,
+    [TrangThai] [nvarchar](20) NULL,
+    [NgayCapNhat] [date] NULL,
+    [MaCB] [int] NULL,
+    PRIMARY KEY CLUSTERED ([MaBHYT] ASC)
+);
+
+-- 10. TẠO RÀNG BUỘC KHÓA NGOẠI
+
+-- CanBo -> DonVi
+ALTER TABLE [dbo].[CanBo] ADD CONSTRAINT [FK_CanBo_DonVi] 
+FOREIGN KEY([MaDV]) REFERENCES [dbo].[DonVi] ([MaDV]);
+
+-- BangLuong -> CanBo
+ALTER TABLE [dbo].[BangLuong] ADD CONSTRAINT [FK_BangLuong_CanBo] 
+FOREIGN KEY([MaCB]) REFERENCES [dbo].[CanBo] ([MaCB]);
+
+ALTER TABLE [dbo].[BangLuong] ADD CONSTRAINT [FK_BangLuong_NguoiTao] 
+FOREIGN KEY([MaNguoiTao]) REFERENCES [dbo].[CanBo] ([MaCB]);
+
+ALTER TABLE [dbo].[BangLuong] ADD CONSTRAINT [FK_BangLuong_NguoiDuyet] 
+FOREIGN KEY([MaNguoiDuyet]) REFERENCES [dbo].[CanBo] ([MaCB]);
+
+-- LichSuLuong -> CanBo
+ALTER TABLE [dbo].[LichSuLuong] ADD CONSTRAINT [FK_LichSuLuong_CanBo] 
+FOREIGN KEY([MaCB]) REFERENCES [dbo].[CanBo] ([MaCB]);
+
+-- KeHoachKhamSucKhoe -> DonVi, CanBo
+ALTER TABLE [dbo].[KeHoachKhamSucKhoe] ADD CONSTRAINT [FK_KeHoachKham_DonVi] 
+FOREIGN KEY([MaDV]) REFERENCES [dbo].[DonVi] ([MaDV]);
+
+ALTER TABLE [dbo].[KeHoachKhamSucKhoe] ADD CONSTRAINT [FK_KeHoachKham_NguoiTao] 
+FOREIGN KEY([MaNguoiTao]) REFERENCES [dbo].[CanBo] ([MaCB]);
+
+-- DanhSachKham -> KeHoachKhamSucKhoe, CanBo
+ALTER TABLE [dbo].[DanhSachKham] ADD CONSTRAINT [FK_DanhSachKham_KeHoach] 
+FOREIGN KEY([MaKHKSK]) REFERENCES [dbo].[KeHoachKhamSucKhoe] ([MaKHKSK]);
+
+ALTER TABLE [dbo].[DanhSachKham] ADD CONSTRAINT [FK_DanhSachKham_CanBo] 
+FOREIGN KEY([MaCB]) REFERENCES [dbo].[CanBo] ([MaCB]);
+
+-- TongHopLuong -> DonVi
+ALTER TABLE [dbo].[TongHopLuong] ADD CONSTRAINT [FK_TongHopLuong_DonVi] 
+FOREIGN KEY([MaDV]) REFERENCES [dbo].[DonVi] ([MaDV]);
+
+------------------- THIEU --------------------------------
 
 CREATE TABLE Loai_BC (
     MaLBC INT IDENTITY(1,1) PRIMARY KEY,
@@ -136,9 +336,8 @@ CREATE TABLE NoiDung_HP (
 	GhiChu NVARCHAR(500),
 	FOREIGN KEY (MaHP) REFERENCES HocPhan(MaHP)
 );
-
 CREATE TABLE DeXuatHocPhan (
-    MaDXHP INT IDENTITY(1,1) PRIMARY KEY,
+	MaDXHP INT IDENTITY(1,1) PRIMARY KEY,
     MaHP INT NOT NULL,
     TaiLieu NVARCHAR(MAX),
     KhoiKienThuc NVARCHAR(255),
@@ -239,33 +438,270 @@ CREATE TABLE TaiLieuDeTai (
     FOREIGN KEY (MaDT) REFERENCES DeTai(MaDT)
 );
 
+-----------------== AN ==-------------------------------
+CREATE TABLE ChuongTrinhDaoTao (
+    MaCT INT IDENTITY(1,1) PRIMARY KEY,
+    TenCT NVARCHAR(50) NULL,
+    MaDM INT NULL,
+    NgayBatDau DATE NULL,
+    NgayKetThuc DATE NULL,
+    DiaDiem NVARCHAR(50) NULL,
+    MaTrangThai NCHAR(10) NULL,
+    Khoa NVARCHAR(50) NULL
+);
 
+CREATE TABLE CTDT_CanBo (
+    MaCT INT NOT NULL,
+    MaCB INT NOT NULL,
+    ThamGia NVARCHAR(50) NULL,
+    PRIMARY KEY (MaCT, MaCB)
+);
 
----------------
-INSERT INTO Role (roleName) VALUES (N'ADMIN');
-INSERT INTO Role (roleName) VALUES (N'PhongDaoTao');
-INSERT INTO Role (roleName) VALUES (N'GiangVien');
+CREATE TABLE DanhMucDaoTao (
+    MaDM INT IDENTITY(1,1) PRIMARY KEY,
+    TenDM NVARCHAR(50) NULL,
+    MoTa NVARCHAR(50) NULL,
+    MaTrangThai NCHAR(10) NULL,
+    NgayCapNhat DATETIME NOT NULL DEFAULT GETDATE()
+);
+
+CREATE TABLE KhenThuong (
+    MaKT INT IDENTITY(1,1) PRIMARY KEY,
+    LyDo NVARCHAR(50) NULL,
+    MaTrangThai NCHAR(10) NOT NULL,
+    MaLoaiKT NCHAR(10) NULL,
+    ThoiGianTao DATETIME NULL
+);
+
+CREATE TABLE KhenThuong_CanBo (
+    MaKT INT NOT NULL,
+    MaCB INT NOT NULL,
+    NgayQuyetDinh DATE NULL,
+    PRIMARY KEY (MaKT, MaCB)
+);
+
+CREATE TABLE KyLuat (
+    MaKL INT IDENTITY(1,1) PRIMARY KEY,
+    LyDo NVARCHAR(50) NULL,
+    MaTrangThai NCHAR(10) NULL,
+    MaLoaiKL NCHAR(10) NULL,
+    ThoiGianTao DATETIME NULL
+);
+CREATE TABLE KyLuat_CanBo (
+    MaKL INT NOT NULL,
+    MaCB INT NOT NULL,
+    NgayQuyetDinh DATE NULL,
+    PRIMARY KEY (MaKL, MaCB)
+);
+CREATE TABLE LoaiKhenThuong (
+    MaLoaiKT NCHAR(10) PRIMARY KEY,
+    LoaiKhenThuong NVARCHAR(50) NULL
+);
+
+CREATE TABLE LoaiKyLuat (
+    MaLoaiKL NCHAR(10) PRIMARY KEY,
+    LoaiKyLuat NVARCHAR(50) NULL
+);
+
+CREATE TABLE TrangThai (
+    MaTrangThai NCHAR(10) PRIMARY KEY,
+    TenTrangThai NVARCHAR(50) NULL
+);
+
+ALTER TABLE CTDT_CanBo
+ADD CONSTRAINT FK_CTDT_CanBo_CanBo FOREIGN KEY (MaCB)
+REFERENCES CanBo(MaCB);
+
+ALTER TABLE KhenThuong_CanBo
+ADD CONSTRAINT FK_KhenThuong_CanBo_CanBo FOREIGN KEY (MaCB)
+REFERENCES CanBo(MaCB);
+
+ALTER TABLE KyLuat_CanBo
+ADD CONSTRAINT FK_KyLuat_CanBo_CanBo FOREIGN KEY (MaCB)
+REFERENCES CanBo(MaCB);
+ALTER TABLE CTDT_CanBo
+ADD CONSTRAINT FK_CTDT_CanBo_ChuongTrinhDaoTao FOREIGN KEY (MaCT)
+REFERENCES ChuongTrinhDaoTao(MaCT);
+ALTER TABLE ChuongTrinhDaoTao
+ADD CONSTRAINT FK_ChuongTrinhDaoTao_DanhMucDaoTao FOREIGN KEY (MaDM)
+REFERENCES DanhMucDaoTao(MaDM);
+ALTER TABLE ChuongTrinhDaoTao
+ADD CONSTRAINT FK_ChuongTrinhDaoTao_TrangThai FOREIGN KEY (MaTrangThai)
+REFERENCES TrangThai(MaTrangThai);
+ALTER TABLE DanhMucDaoTao
+ADD CONSTRAINT FK_DanhMucDaoTao_TrangThai FOREIGN KEY (MaTrangThai)
+REFERENCES TrangThai(MaTrangThai);
+ALTER TABLE KhenThuong
+ADD CONSTRAINT FK_KhenThuong_LoaiKhenThuong FOREIGN KEY (MaLoaiKT)
+REFERENCES LoaiKhenThuong(MaLoaiKT);
+ALTER TABLE KhenThuong
+ADD CONSTRAINT FK_KhenThuong_TrangThai FOREIGN KEY (MaTrangThai)
+REFERENCES TrangThai(MaTrangThai);
+ALTER TABLE KyLuat
+ADD CONSTRAINT FK_KyLuat_LoaiKyLuat FOREIGN KEY (MaLoaiKL)
+REFERENCES LoaiKyLuat(MaLoaiKL);
+ALTER TABLE KyLuat
+ADD CONSTRAINT FK_KyLuat_TrangThai FOREIGN KEY (MaTrangThai)
+REFERENCES TrangThai(MaTrangThai);
+ALTER TABLE KhenThuong_CanBo
+ADD CONSTRAINT FK_KhenThuong_CanBo_KhenThuong FOREIGN KEY (MaKT)
+REFERENCES KhenThuong(MaKT);
+ALTER TABLE KyLuat_CanBo
+ADD CONSTRAINT FK_KyLuat_CanBo_KyLuat FOREIGN KEY (MaKL)
+REFERENCES KyLuat(MaKL);
+
+-------------------------------HIEU-----------------------------
+-- 1. Bảng loại biến động
+CREATE TABLE LoaiBienDong (
+    MaLBD INT IDENTITY(1,1) PRIMARY KEY,
+    TenLoai NVARCHAR(100) NOT NULL,
+    MoTa NVARCHAR(255)
+);
+
+-- 2. BẢNG BIẾN ĐỘNG NHÂN SỰ
+CREATE TABLE BienDongNhanSu (
+    MaBD INT IDENTITY(1,1) PRIMARY KEY,
+    MaCB INT NOT NULL,
+    MaLBD INT NOT NULL,
+    NgayBienDong DATE NOT NULL,
+    NgayHieuLuc DATE,
+    NoiDung NVARCHAR(500) NOT NULL,
+    DonViCu INT NULL,
+    DonViMoi INT NULL,
+    ChucVuCu NVARCHAR(100),
+    ChucVuMoi NVARCHAR(100),
+    CapBacCu NVARCHAR(30),
+    CapBacMoi NVARCHAR(30),
+    QuyetDinhSo NVARCHAR(100),
+    NgayQuyetDinh DATE,
+    CoQuanBanHanh NVARCHAR(255),
+    TrangThai NVARCHAR(50) DEFAULT N'Chờ duyệt',
+    NguoiTao INT NOT NULL,
+    NgayTao DATETIME DEFAULT GETDATE(),
+    NguoiDuyet INT NULL,
+    NgayDuyet DATE NULL,
+    LyDo NVARCHAR(500),
+    GhiChu NVARCHAR(500),
+    FOREIGN KEY (MaCB) REFERENCES CanBo(MaCB),
+    FOREIGN KEY (MaLBD) REFERENCES LoaiBienDong(MaLBD),
+    FOREIGN KEY (DonViCu) REFERENCES DonVi(MaDV),
+    FOREIGN KEY (DonViMoi) REFERENCES DonVi(MaDV),
+    FOREIGN KEY (NguoiTao) REFERENCES CanBo(MaCB),
+    FOREIGN KEY (NguoiDuyet) REFERENCES CanBo(MaCB)
+);
+
+-- 3. BẢNG HỒ SƠ CHÍNH TRỊ
+CREATE TABLE HoSoChinhTri (
+    MaHS INT IDENTITY(1,1) PRIMARY KEY,
+    MaCB INT NOT NULL,
+    -- THÔNG TIN ĐOÀN
+    NgayVaoDoan DATE,
+    NoiVaoDoan NVARCHAR(255),
+    ChucVuDoan NVARCHAR(100),
+    -- THÔNG TIN ĐẢNG
+    NgayVaoDang DATE,
+    NoiVaoDang NVARCHAR(255),
+    NgayChinhThuc DATE,
+    ChiBo NVARCHAR(255),
+    ChucVuDang NVARCHAR(100),
+    -- THÔNG TIN GIA ĐÌNH
+    ThanhPhanGiaDinh NVARCHAR(255),
+    NgheNghiepGiaDinh NVARCHAR(255),
+    -- QUÁ TRÌNH HOẠT ĐỘNG
+    QuaTrinhCongTac NVARCHAR(MAX),
+    QuaTrinhHocTap NVARCHAR(MAX),
+    KhenThuongKyLuat NVARCHAR(MAX),
+    -- ĐÁNH GIÁ
+    DanhGiaXepLoai NVARCHAR(100),
+    DanhGiaHangNam NVARCHAR(MAX),
+    KhuyetDiem NVARCHAR(MAX),
+    HuongPhatTrien NVARCHAR(MAX),
+    -- TRẠNG THÁI
+    TrangThai NVARCHAR(50) DEFAULT N'Hoạt động',
+    NgayCapNhat DATETIME DEFAULT GETDATE(),
+    NguoiCapNhat INT,
+    FOREIGN KEY (MaCB) REFERENCES CanBo(MaCB),
+    FOREIGN KEY (NguoiCapNhat) REFERENCES CanBo(MaCB)
+);
+
+-- 4. BẢNG ĐẢNG PHÍ
+CREATE TABLE DangPhi (
+    MaDP INT IDENTITY(1,1) PRIMARY KEY,
+    MaCB INT NOT NULL,
+    Nam INT NOT NULL,
+    Thang INT NOT NULL,
+    SoTien DECIMAL(18,2) NOT NULL,
+    NgayNop DATE,
+    TrangThai NVARCHAR(50) DEFAULT N'Chưa đóng',
+    NguoiThu INT NULL,
+    HinhThucDong NVARCHAR(50), -- Tiền mặt, chuyển khoản
+    SoPhieuThu NVARCHAR(50),
+    GhiChu NVARCHAR(255),
+    NgayTao DATETIME DEFAULT GETDATE(),
+    FOREIGN KEY (MaCB) REFERENCES CanBo(MaCB),
+    FOREIGN KEY (NguoiThu) REFERENCES CanBo(MaCB)
+);
+
+-- Phan 2: Insert Sample Data 
+----- PHAN CHUNG CUA NHOM  -------
+INSERT INTO Role (roleName) VALUES (N'ADMIN'), (N'PhongDaoTao'), (N'GiangVien');
+INSERT INTO [User] (Username, Email, Password, FullName, UserType, NoiDungEmail)
+ VALUES ('admin1', null, N'$2b$10$CkBKz1CiMntvIe3XjVvJ8Or63odPg5dKo5Wi0QFHdaTimZXBaFhsa',N'Vu Cong Thieu',N'Giang Vien', null);
+INSERT INTO Role_User (UserId, roleId, isActive ) VALUES (1,1,1);
+----------------------------------- END CHUNG -------------------------
 INSERT INTO DonVi (TenDV)
 VALUES 
 (N'Khoa Công nghệ thông tin'),
 (N'Khoa Điện tử viễn thông'),
-(N'Phòng Đào Tạo');
-INSERT INTO Loai_BC (LoaiBangCap)
-VALUES 
-(N'Cử nhân'),
-(N'Thạc sĩ'),
-(N'Tiến sĩ');
-INSERT INTO CanBo (MaDV, HoTenKhaiSinh, GioiTinh, CapBac, NgaySinh, NoiDKHK, QueQuan)
-VALUES 
-(1, N'Trần Văn Hùng', N'Nam', N'Thượng úy', '1985-03-20', N'Hà Nội', N'Hà Nam'),
-(2, N'Nguyễn Thị Mai', N'Nữ', N'Đại úy', '1990-07-10', N'Đà Nẵng', N'Thanh Hóa'),
-(3, N'Lê Văn Bình', N'Nam', N'Thiếu tá', '1980-11-02', N'HCM', N'Quảng Nam');
+(N'Phòng Đào Tạo'),
+(N'Phòng Tổ chức cán bộ'),
+(N'Bộ môn Công nghệ phần mềm'),
+(N'Bộ môn Hệ thống thông tin'),
+(N'Tiểu đoàn 1'),
+(N'Tiểu đoàn 2'),
+(N'Đại đội 157');
+
+INSERT INTO CanBo (
+  HoTenKhaiSinh, HoTenThuongDung, BiDanh, CapBac, MaDV, GioiTinh, ChucVu, NgaySinh,
+  SoCCCD, NgayNhapNgu, NoiSinh, NoiDKHK, DanToc, ThanhPhanGD, NgayThamGiaCM,
+  Ngaychinhthuc, Ngayvaodoan, GDPT, LyLuanCT, HocHam, CongTacDangLam, QueQuan,
+  NoiTamTru, TonGiao, NgheNghiep, NgayCongTac, Ngayvaodang, Chibo, ThamGiaTCXH,
+  ChuyenMonNV, NgoaiNgu, HocVi, NgayTao, NgaySua
+) VALUES
+(N'Lê Văn Bình', N'Bình', N'Không', N'Thiếu tá', 1, N'Nam', N'Trợ lý chính trị', '1985-03-10',
+ '123456789012', '2005-09-01', N'Hà Nội', N'Hà Nội', N'Kinh', N'Công nhân', '2003-06-10',
+ '2004-06-10', '2002-05-01', N'12/12', N'Trung cấp', N'Không', N'Chính trị', N'Nam Định',
+ N'Hà Nội', N'Không', N'Bộ đội', '2006-01-01', '2003-05-01', N'Chi bộ 1', N'Công đoàn',
+ N'Sĩ quan Chính trị', N'Không', N'Cử nhân', CONVERT(DATE, GETDATE()), CONVERT(DATE, GETDATE())),
+(N'Nguyễn Thị Hoa', N'Hoa', N'Không', N'Trung úy', 2, N'Nữ', N'Cán bộ huấn luyện', '1990-07-15',
+ '987654321098', '2010-08-01', N'Nghệ An', N'TP Vinh', N'Kinh', N'Nông dân', '2008-05-20',
+ '2009-05-20', '2007-04-12', N'12/12', N'Sơ cấp', N'Không', N'Giảng viên', N'Nghệ An',
+ N'TP Vinh', N'Phật giáo', N'Giáo viên', '2012-09-01', '2008-04-15', N'Chi bộ 3', N'Đoàn thanh niên',
+ N'Giáo dục thể chất', N'Tiếng Anh', N'Cao đẳng', CONVERT(DATE, GETDATE()), CONVERT(DATE, GETDATE())),
+(N'Trần Văn An', N'An', N'Không', N'Thiếu tá', 1, N'Nam', N'Trưởng ban hậu cần', '1982-12-05',
+ '111122223333', '2002-02-15', N'Hải Phòng', N'Hải Phòng', N'Kinh', N'Viên chức', '2000-09-01',
+ '2001-09-01', '1999-03-10', N'12/12', N'Cao cấp', N'Tiến sĩ', N'Hậu cần', N'Hải Phòng',
+ N'Hà Nội', N'Không', N'Kỹ sư', '2003-10-01', '2000-08-15', N'Chi bộ 5', N'Công đoàn',
+ N'Hậu cần', N'Tiếng Nga', N'Thạc sĩ', CONVERT(DATE, GETDATE()), CONVERT(DATE, GETDATE())),
+(N'Phạm Thị Lan', N'Lan', N'Không', N'Thượng úy', 3, N'Nữ', N'Cán bộ nhân sự', '1992-09-20',
+ '444455556666', '2012-11-01', N'Thái Bình', N'Thái Bình', N'Kinh', N'Công nhân', '2010-04-10',
+ '2011-04-10', '2009-03-05', N'12/12', N'Trung cấp', N'Không', N'Kỹ thuật', N'Thái Bình',
+ N'Thái Bình', N'Không', N'Nhân viên hành chính', '2014-03-01', '2010-03-10', N'Chi bộ 2', N'Hội phụ nữ',
+ N'Nhân sự', N'Tiếng Anh', N'Cử nhân', CONVERT(DATE, GETDATE()), CONVERT(DATE, GETDATE()));
 
 INSERT INTO QuaTrinhCongTac (MaCB, ChucVu, ThoiGianBatDau, ThoiGianKetThuc)
 VALUES 
 (1, N'Giảng viên', '2015-09-01', null),
 (2, N'Phó trưởng khoa', '2021-01-01', NULL),
 (3, N'Trưởng bộ môn', '2017-07-01', null);
+
+INSERT INTO Loai_BC (LoaiBangCap)
+VALUES 
+(N'Cử nhân'),
+(N'Thạc sĩ'),
+(N'Tiến sĩ'),
+(N'CCNVSP');
+
 INSERT INTO BangCap (MaGV, MaLBC, NguoiTao, SoHieuVanBan, ChuyenNganh, NamTotNghiep, TruongCapBang, HeDaoTao, NgayCap, FileScan, TrangThai)
 VALUES 
 (1, 1, null, N'SHV001', N'Công nghệ phần mềm', '2008', N'Đại học Bách Khoa', N'Chính quy', '2008-06-01', null, N'Đã duyệt'),

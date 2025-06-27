@@ -49,6 +49,7 @@ const BangCapFormPage = () => {
           api.getLoaiBang(),
         ]);
         setCanBoList(canboRes.data);
+        console.log(canboRes.data.items);
         setLoaiBangList(loaibcRes.data);
       } catch (err) {
         toast.error("Không thể tải dữ liệu danh sách.");

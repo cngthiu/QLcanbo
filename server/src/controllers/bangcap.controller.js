@@ -19,7 +19,6 @@ exports.create = async (req, res) => {
     );
     res.json(record);
   } catch (error) {
-    console.error("Lỗi tạo BC:", error);
     res
       .status(500)
       .json({ message: "Lỗi khi tạo bằng cấp", error: error.message });
