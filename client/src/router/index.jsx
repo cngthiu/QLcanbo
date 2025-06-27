@@ -8,6 +8,11 @@ import UserList from "../pages/UserList";
 import BangCapList from "../pages/QuanLyBangCap/BangCapList";
 import BangCapFormPage from "../pages/QuanLyBangCap/BangCapFormPage";
 import BangCapDetail from "@/pages/QuanLyBangCap/BangCapDetail";
+<<<<<<< HEAD
+import BangLuongList from "../pages/QuanLyLuong/BangLuongList";
+import BangLuongFormPage from "../pages/QuanLyLuong/BangLuongFormPage";
+import BangLuongDetail from "../pages/QuanLyLuong/BangLuongDetail";
+=======
 
 
 import LyLich from "../pages/QuanLyTTCaNhan/LyLich";
@@ -29,6 +34,7 @@ import BangLuongFormPage from "../pages/QuanLyLuong/BangLuongFormPage";
 import BangLuongDetail from "../pages/QuanLyLuong/BangLuongDetail";
 
 
+>>>>>>> 45a9fd3ef9d59fc6cfe76939e1c08f4124f09e49
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -43,11 +49,19 @@ export const router = createBrowserRouter([
       { path: "/bangcap", element: <BangCapList /> },
       { path: "/bangcap/form", element: <BangCapFormPage /> },
       { path: "/bangcap/view/:id", element: <BangCapDetail /> },
+<<<<<<< HEAD
 
       { path: "/bangluong", element: <BangLuongList /> },
       { path: "/bangluong/form", element: <BangLuongFormPage /> },
       { path: "/bangluong/view/:id", element: <BangLuongDetail /> },
 
+=======
+<<<<<<< HEAD
+      { path: "/bangluong", element: <BangLuongList /> },
+      { path: "/bangluong/form", element: <BangLuongFormPage /> },
+      { path: "/bangluong/view/:id", element: <BangLuongDetail /> },
+=======
+>>>>>>> 718cde1284980a4f26d26837bd1a6d4913099fae
       { path: "/canbo", element: <LyLich /> },
       { path: "/canbo/form", element: <LyLichAdd /> },
       { path: "/canbo/view/:id", element: <LyLichDetail /> },
@@ -61,7 +75,11 @@ export const router = createBrowserRouter([
       { path: "daotao/thamgia/:id/print", element: <InDanhSachCanBo /> },
       { path: "daotao/thamgia/:id/send", element: <GuiEmail /> },
       { path: "user/emails", element: <XemEmail /> },
+<<<<<<< HEAD
 
+=======
+>>>>>>> 45a9fd3ef9d59fc6cfe76939e1c08f4124f09e49
+>>>>>>> 718cde1284980a4f26d26837bd1a6d4913099fae
     ],
   },
   { path: "/login", element: <Login /> },
