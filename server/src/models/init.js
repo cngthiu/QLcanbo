@@ -7,6 +7,10 @@ const Loai_BC = require("./Loai_BC");
 const DonVi = require("./DonVi");
 const QuaTrinhCongTac = require("./QuaTrinhCongTac");
 const LichSuThayDoi_BC = require("./LichSuThayDoi_BC");
+const DMDaoTao = require("./DMDaoTao");
+const TrangThai = require("./TrangThai");
+const DaoTao = require("./DaoTao");
+const CTDT_CanBo = require("./CTDT_CanBo");
 
 // Import các model mới
 const BangLuong = require("./BangLuong");
@@ -42,6 +46,27 @@ CanBo.hasMany(BangLuong, { foreignKey: "MaCB" });
 
 console.log("✅ Models relationships established");
 
+// DMDaoTao - TrangThai
+DMDaoTao.belongsTo(TrangThai, { foreignKey: "MaTrangThai" });
+TrangThai.hasMany(DMDaoTao, { foreignKey: "MaTrangThai" });
+
+// DaoTao - DMDaoTao
+DMDaoTao.hasMany(DaoTao, { foreignKey: "MaDM" });
+DaoTao.belongsTo(DMDaoTao, { foreignKey: "MaDM", as: "DanhMuc" });
+// DaoTao - TrangThai
+TrangThai.hasMany(DaoTao, { foreignKey: "MaTrangThai" });
+DaoTao.belongsTo(TrangThai, { foreignKey: "MaTrangThai", as: "TrangThai" });
+
+// Liên kết CTDT_CanBo với CanBo và DaoTao
+CanBo.belongsToMany(DaoTao, { through: CTDT_CanBo, foreignKey: "MaCB", otherKey: "MaCT" });
+DaoTao.belongsToMany(CanBo, { through: CTDT_CanBo, foreignKey: "MaCT", otherKey: "MaCB" });
+
+CTDT_CanBo.belongsTo(CanBo, { foreignKey: "MaCB" });
+CTDT_CanBo.belongsTo(DaoTao, { foreignKey: "MaCT" });
+CanBo.hasMany(CTDT_CanBo, { foreignKey: "MaCB" });
+DaoTao.hasMany(CTDT_CanBo, { foreignKey: "MaCT" });
+
+
 module.exports = {
   User,
   Role,
@@ -54,4 +79,9 @@ module.exports = {
   LichSuThayDoi_BC,
   BangLuong,
   MucLuongCapBac,
+  DMDaoTao,
+  TrangThai,
+  DaoTao,
+  CTDT_CanBo,
 };
+
