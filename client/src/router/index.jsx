@@ -31,7 +31,10 @@ import BangLuongFormPage from "../pages/QuanLyLuong/BangLuongFormPage";
 import BangLuongDetail from "../pages/QuanLyLuong/BangLuongDetail";
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 842e6f94cb79ab65c22e7d3e6215ba6a483c3a0f
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -47,17 +50,23 @@ export const router = createBrowserRouter([
       { path: "/bangcap/form", element: <BangCapFormPage /> },
       { path: "/bangcap/view/:id", element: <BangCapDetail /> },
 
+<<<<<<< HEAD
 
-
-      { path: "/bangluong", element: <BangLuongList /> },
-      { path: "/bangluong/form", element: <BangLuongFormPage /> },
-      { path: "/bangluong/view/:id", element: <BangLuongDetail /> },
-
+=======
+>>>>>>> 842e6f94cb79ab65c22e7d3e6215ba6a483c3a0f
 
       { path: "/bangluong", element: <BangLuongList /> },
       { path: "/bangluong/form", element: <BangLuongFormPage /> },
       { path: "/bangluong/view/:id", element: <BangLuongDetail /> },
 
+
+<<<<<<< HEAD
+      { path: "/bangluong", element: <BangLuongList /> },
+      { path: "/bangluong/form", element: <BangLuongFormPage /> },
+      { path: "/bangluong/view/:id", element: <BangLuongDetail /> },
+
+=======
+>>>>>>> 842e6f94cb79ab65c22e7d3e6215ba6a483c3a0f
       { path: "/canbo", element: <LyLich /> },
       { path: "/canbo/form", element: <LyLichAdd /> },
       { path: "/canbo/view/:id", element: <LyLichDetail /> },
@@ -74,6 +83,10 @@ export const router = createBrowserRouter([
 
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 842e6f94cb79ab65c22e7d3e6215ba6a483c3a0f
     ],
   },
   { path: "/login", element: <Login /> },
