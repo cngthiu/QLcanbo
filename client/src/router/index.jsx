@@ -9,6 +9,10 @@ import UserList from "../pages/UserList";
 import BangCapList from "../pages/QuanLyBangCap/BangCapList";
 import BangCapFormPage from "../pages/QuanLyBangCap/BangCapFormPage";
 import BangCapDetail from "@/pages/QuanLyBangCap/BangCapDetail";
+import LyLich from "../pages/QuanLyTTCaNhan/LyLich";
+import LyLichAdd from "../pages/QuanLyTTCaNhan/LyLichAdd";
+import LyLichDetail from "../pages/QuanLyTTCaNhan/LyLichDetail";
+import LyLichUpdate from "../pages/QuanLyTTCaNhan/LyLichUpdate";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -23,6 +27,10 @@ export const router = createBrowserRouter([
       { path: "/bangcap", element: <BangCapList /> },
       { path: "/bangcap/form", element: <BangCapFormPage /> },
       { path: "/bangcap/view/:id", element: <BangCapDetail /> },
+      { path: "/canbo", element: <LyLich /> },
+      { path: "/canbo/form", element: <LyLichAdd /> },
+      { path: "/canbo/view/:id", element: <LyLichDetail /> },
+      { path: "/canbo/update/:id", element: <LyLichUpdate /> },
     ],
   },
   { path: "/login", element: <Login /> },

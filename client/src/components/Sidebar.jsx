@@ -21,7 +21,7 @@ const Sidebar = () => {
   }, []);
   const navItems = [
     { path: "/users", label: "Quản lý tài khoản" },
-    { path: "/", label: "Quản lý thông tin cá nhân" },
+    { path: "/canbo", label: "Quản lý thông tin cá nhân" },
     { path: "/", label: "Quản lý thân nhân" },
     { path: "/", label: "Quản lý  nghỉ phép" },
     { path: "/", label: "Quản lý đào tạo cán bộ" },
