@@ -706,33 +706,6 @@ INSERT INTO DonVi (TenDV) VALUES
 (N'Phòng Tài Chính'),
 (N'Viện mô phỏng');
 
-INSERT INTO CanBo (
-  HoTenKhaiSinh, HoTenThuongDung, BiDanh, CapBac, MaDV, GioiTinh, ChucVu, NgaySinh,
-  SoCCCD, NgayNhapNgu, NoiSinh, NoiDKHK, DanToc, ThanhPhanGD, NgayThamGiaCM,
-  Ngaychinhthuc, Ngayvaodoan, GDPT, LyLuanCT, HocHam, CongTacDangLam, QueQuan,
-  NoiTamTru, TonGiao, NgheNghiep, NgayCongTac, Ngayvaodang, Chibo, ThamGiaTCXH,
-  ChuyenMonNV, NgoaiNgu, HocVi, NgayTao, NgaySua
-) VALUES
-(N'Lê Văn Bình', N'Bình', N'Không', N'Thiếu tá', 1, N'Nam', N'Trợ lý chính trị', '1985-03-10',
- '123456789012', '2005-09-01', N'Hà Nội', N'Hà Nội', N'Kinh', N'Công nhân', '2003-06-10',
- '2004-06-10', '2002-05-01', N'12/12', N'Trung cấp', N'Không', N'Chính trị', N'Nam Định',
- N'Hà Nội', N'Không', N'Bộ đội', '2006-01-01', '2003-05-01', N'Chi bộ 1', N'Công đoàn',
- N'Sĩ quan Chính trị', N'Không', N'Cử nhân', CONVERT(DATE, GETDATE()), CONVERT(DATE, GETDATE())),
-(N'Nguyễn Thị Hoa', N'Hoa', N'Không', N'Trung úy', 2, N'Nữ', N'Cán bộ huấn luyện', '1990-07-15',
- '987654321098', '2010-08-01', N'Nghệ An', N'TP Vinh', N'Kinh', N'Nông dân', '2008-05-20',
- '2009-05-20', '2007-04-12', N'12/12', N'Sơ cấp', N'Không', N'Giảng viên', N'Nghệ An',
- N'TP Vinh', N'Phật giáo', N'Giáo viên', '2012-09-01', '2008-04-15', N'Chi bộ 3', N'Đoàn thanh niên',
- N'Giáo dục thể chất', N'Tiếng Anh', N'Cao đẳng', CONVERT(DATE, GETDATE()), CONVERT(DATE, GETDATE())),
-(N'Trần Văn An', N'An', N'Không', N'Thiếu tá', 1, N'Nam', N'Trưởng ban hậu cần', '1982-12-05',
- '111122223333', '2002-02-15', N'Hải Phòng', N'Hải Phòng', N'Kinh', N'Viên chức', '2000-09-01',
- '2001-09-01', '1999-03-10', N'12/12', N'Cao cấp', N'Tiến sĩ', N'Hậu cần', N'Hải Phòng',
- N'Hà Nội', N'Không', N'Kỹ sư', '2003-10-01', '2000-08-15', N'Chi bộ 5', N'Công đoàn',
- N'Hậu cần', N'Tiếng Nga', N'Thạc sĩ', CONVERT(DATE, GETDATE()), CONVERT(DATE, GETDATE())),
-(N'Phạm Thị Lan', N'Lan', N'Không', N'Thượng úy', 3, N'Nữ', N'Cán bộ nhân sự', '1992-09-20',
- '444455556666', '2012-11-01', N'Thái Bình', N'Thái Bình', N'Kinh', N'Công nhân', '2010-04-10',
- '2011-04-10', '2009-03-05', N'12/12', N'Trung cấp', N'Không', N'Kỹ thuật', N'Thái Bình',
- N'Thái Bình', N'Không', N'Nhân viên hành chính', '2014-03-01', '2010-03-10', N'Chi bộ 2', N'Hội phụ nữ',
- N'Nhân sự', N'Tiếng Anh', N'Cử nhân', CONVERT(DATE, GETDATE()), CONVERT(DATE, GETDATE()));
 
 INSERT INTO QuaTrinhCongTac (MaCB, ChucVu, DonVi, ThoiGianBatDau, ThoiGianKetThuc, QuyetDinhSo, NgayQuyetDinh, CoQuanBanHanh, NoiDungCongViec, NguoiTao) VALUES 
 (1, N'Giảng viên', N'Khoa CNTT', '2015-09-01', NULL, N'123/QĐ-HVKTQS', '2015-08-20', N'Học viện KTQS', N'Giảng dạy các môn chuyên ngành CNTT', 1),
@@ -770,17 +743,6 @@ INSERT INTO MonHoc (MaGV, TenMonHoc, SoTinChi, SoTiet, NgayBatDau, NgayKetThuc, 
 	(N'Lập trình Python', '3', '45', '2024-01-15', '2024-05-15', N'Trắc nghiệm',null),
 	(N'Thiết kế mạch số', '3', '45', '2024-02-01', '2024-06-01', N'Thực hành',null),
 	(N'Trí tuệ nhân tạo', '4', '60', '2024-03-01', '2024-07-01', N'Viết',null);
-insert into TienDoDeTai (MaDT,MocThoiGian,NoiDung,TrangThai,KetQua,KhoKhan) values 
-(1,'2025-3-4','Khảo sát thực trạng quản lý tại các HVQS','Đã hoàn thành','Thu thập dữ liệu từ 5 học viên',null);
-
-insert into TaiChinhDeTai (MaDT,TenKhoanChi, LoaiChiPhi,DuToan,ThucChi,NgayChi,TrangThai,GhiChu,NguoiThucHien,FileHoaDon) values 
-(1,'Chi phí nhân sự giai đoạn 1','Nhân công',100000000,95000000,'2025-02-12','Đã quyết toán',null,2,null),
-(2,'Mua thiết bị AI','Vật tư',150000000,145000000,'2025-03-04','Đã quyết toán',null,2,null);
-	
-
--- Giả sử bảng CanBo có MaCB INT IDENTITY(1,1)
-DELETE FROM DeTai;
-DBCC CHECKIDENT ('DeTai', RESEED, 0);
 
 INSERT INTO DeTai (TenDeTai, LinhVuc, KinhPhiDK, CapQuanLy, NgayBatDau, NgayKetThucDK, TrangThai, MucTieu, DonViChuTri)
 VALUES 
@@ -788,6 +750,13 @@ VALUES
 (N'Ứng dụng AI trong giáo dục', N'Trí tuệ nhân tạo', 20000000000, N'Cấp trường', '2024-01-01', '2024-12-31', N'Chưa bắt đầu', N'Tối ưu hóa hệ thống quản lý học tập', 8),
 (N'Phân tích dữ liệu lớn', N'Khoa học dữ liệu', 30000000000, N'Cấp bộ', '2024-02-01', '2024-12-31', N'Đang nghiên cứu', N'Tăng tốc xử lý big data', 9),
 (N'Bảo mật hệ thống mạng quân sự', N'An toàn thông tin', 50000000000, N'Cấp nhà nước', '2024-03-01', '2025-03-01', N'Hoàn thành nghiên cứu', N'Đảm bảo an ninh thông tin mạng', 4);
+
+insert into TienDoDeTai (MaDT,MocThoiGian,NoiDung,TrangThai,KetQua,KhoKhan) values 
+(1,'2025-3-4','Khảo sát thực trạng quản lý tại các HVQS','Đã hoàn thành','Thu thập dữ liệu từ 5 học viên',null);
+
+insert into TaiChinhDeTai (MaDT,TenKhoanChi, LoaiChiPhi,DuToan,ThucChi,NgayChi,TrangThai,GhiChu,NguoiThucHien,FileHoaDon) values 
+(1,'Chi phí nhân sự giai đoạn 1','Nhân công',100000000,95000000,'2025-02-12','Đã quyết toán',null,2,null),
+(2,'Mua thiết bị AI','Vật tư',150000000,145000000,'2025-03-04','Đã quyết toán',null,2,null);
 
  INSERT INTO KeHoachGiangDay (MaHP, MaBoMon, NamHoc, Lop, HocKy, NganhDaoTao, MaNguoiTao, TrangThai, NgayTao, MaNguoiDuyet, NgayDuyet, MaGV) VALUES 
   (1, 5, '2024-2025', 'VK-1', '2', 'Kỹ thuật điện tử vũ khí',1, 'Đã duyệt', '2025-02-11 12:00:00',2,'2025-02-14',1);

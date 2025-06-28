@@ -14,34 +14,43 @@ exports.getAll = async (req, res) => {
     const { keyword = "", dv = "", type = "" } = req.query;
 
     const whereClause = {};
-    const includeClause = [
-      {
-        model: CanBo,
-        as: "NguoiSoHuu",
-        attributes: ["MaCB", "HoTenKhaiSinh", "MaDV"],
-        include: [
-          {
-            model: DonVi,
-            attributes: ["TenDV"],
-            ...(dv && {
-              where: {
-                TenDV: { [Op.like]: `%${dv}%` },
-              },
-            }),
-          },
-        ],
-      },
-      {
-        model: Loai_BC,
-        attributes: ["LoaiBangCap"],
-        ...(type && {
-          where: {
-            LoaiBangCap: { [Op.like]: `%${type}%` },
-          },
-        }),
-      },
-    ];
+    const includeClause = [];
 
+    const canBoInclude = {
+      model: CanBo,
+      as: "NguoiSoHuu",
+      attributes: ["MaCB", "HoTenKhaiSinh", "MaDV"],
+      include: [
+        {
+          model: DonVi,
+          attributes: ["TenDV"],
+        },
+      ],
+    };
+
+    if (dv) {
+      canBoInclude.include[0].where = {
+        TenDV: { [Op.like]: `%${dv}%` },
+      };
+    }
+
+    includeClause.push(canBoInclude);
+
+    // Include Loai_BC
+    const loaiBangInclude = {
+      model: Loai_BC,
+      attributes: ["LoaiBangCap"],
+    };
+
+    if (type) {
+      loaiBangInclude.where = {
+        LoaiBangCap: { [Op.like]: `%${type}%` },
+      };
+    }
+
+    includeClause.push(loaiBangInclude);
+
+    // Keyword filter
     if (keyword) {
       whereClause[Op.or] = [
         { SoHieuVanBan: { [Op.like]: `%${keyword}%` } },

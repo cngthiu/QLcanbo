@@ -41,17 +41,34 @@ const BangLuongFormPage = () => {
     } else {
       // Set default month to current month
       const now = new Date();
-      const currentMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
-      setForm(prev => ({ ...prev, ThangNam: currentMonth }));
+      const currentMonth = `${now.getFullYear()}-${String(
+        now.getMonth() + 1
+      ).padStart(2, "0")}`;
+      setForm((prev) => ({ ...prev, ThangNam: currentMonth }));
     }
   }, [state]);
 
+  // useEffect(() => {
+  //   const fetchCanBo = async () => {
+  //     try {
+  //       const res = await api.getCanBo();
+  //       setCanBoList(res.data);
+  //     } catch (err) {
+  //       toast.error("Không thể tải danh sách cán bộ.");
+  //     }
+  //   };
+  //   fetchCanBo();
+  // }, []);
   useEffect(() => {
     const fetchCanBo = async () => {
       try {
         const res = await api.getCanBo();
-        setCanBoList(res.data);
+        console.log("Danh sách cán bộ:", res.data);
+        const list = Array.isArray(res.data.items) ? res.data.items : [];
+        setCanBoList(list || []);
       } catch (err) {
+        console.error("Lỗi khi tải danh sách cán bộ:", err);
+        setCanBoList([]); // fallback an toàn
         toast.error("Không thể tải danh sách cán bộ.");
       }
     };
@@ -64,7 +81,7 @@ const BangLuongFormPage = () => {
 
     // Nếu chọn cán bộ, lấy thông tin chi tiết
     if (name === "MaCB") {
-      const canbo = canBoList.find(cb => cb.MaCB == value);
+      const canbo = canBoList.find((cb) => cb.MaCB == value);
       setSelectedCanBo(canbo);
     }
   };
@@ -81,45 +98,45 @@ const BangLuongFormPage = () => {
   };
 
   const handleSubmit = async () => {
-  if (!form.MaCB || !form.ThangNam) {
-    toast.error("Vui lòng chọn cán bộ và tháng năm!");
-    return;
-  }
+    if (!form.MaCB || !form.ThangNam) {
+      toast.error("Vui lòng chọn cán bộ và tháng năm!");
+      return;
+    }
 
-  const submitData = {
-    ...form,
-    LuongCoBan: parseFloat(form.LuongCoBan) || 0,
-    PhuCapChucVu: parseFloat(form.PhuCapChucVu) || 0,
-    PhuCapCapBac: parseFloat(form.PhuCapCapBac) || 0,
-    PhuCapKhac: parseFloat(form.PhuCapKhac) || 0,
-    ThuongThang: parseFloat(form.ThuongThang) || 0,
-    KhauTru: parseFloat(form.KhauTru) || 0,
+    const submitData = {
+      ...form,
+      LuongCoBan: parseFloat(form.LuongCoBan) || 0,
+      PhuCapChucVu: parseFloat(form.PhuCapChucVu) || 0,
+      PhuCapCapBac: parseFloat(form.PhuCapCapBac) || 0,
+      PhuCapKhac: parseFloat(form.PhuCapKhac) || 0,
+      ThuongThang: parseFloat(form.ThuongThang) || 0,
+      KhauTru: parseFloat(form.KhauTru) || 0,
+    };
+
+    try {
+      if (state?.MaBL) {
+        await api.update(state.MaBL, submitData);
+        toast.success("Cập nhật bảng lương thành công!");
+      } else {
+        await api.create(submitData);
+        toast.success("Thêm mới bảng lương thành công!");
+      }
+      navigate("/bangluong");
+    } catch (err) {
+      console.error("Lỗi khi lưu:", err);
+
+      // Hiển thị lỗi từ server
+      if (err.response?.data?.message) {
+        toast.error(err.response.data.message);
+      } else if (err.response?.status === 400) {
+        toast.error("Dữ liệu không hợp lệ. Vui lòng kiểm tra lại!");
+      } else if (err.response?.status === 500) {
+        toast.error("Lỗi hệ thống. Vui lòng thử lại sau!");
+      } else {
+        toast.error("Có lỗi xảy ra. Vui lòng thử lại!");
+      }
+    }
   };
-
-  try {
-    if (state?.MaBL) {
-      await api.update(state.MaBL, submitData);
-      toast.success("Cập nhật bảng lương thành công!");
-    } else {
-      await api.create(submitData);
-      toast.success("Thêm mới bảng lương thành công!");
-    }
-    navigate("/bangluong");
-  } catch (err) {
-    console.error("Lỗi khi lưu:", err);
-    
-    // Hiển thị lỗi từ server
-    if (err.response?.data?.message) {
-      toast.error(err.response.data.message);
-    } else if (err.response?.status === 400) {
-      toast.error("Dữ liệu không hợp lệ. Vui lòng kiểm tra lại!");
-    } else if (err.response?.status === 500) {
-      toast.error("Lỗi hệ thống. Vui lòng thử lại sau!");
-    } else {
-      toast.error("Có lỗi xảy ra. Vui lòng thử lại!");
-    }
-  }
-};
 
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat("vi-VN").format(amount);
@@ -145,21 +162,37 @@ const BangLuongFormPage = () => {
               disabled={!!state}
             >
               <option value="">-- Chọn cán bộ --</option>
-              {canBoList.map((cb) => (
+              {/* {canBoList.map((cb) => (
                 <option key={cb.MaCB} value={cb.MaCB}>
                   {cb.HoTenKhaiSinh} - {cb.CapBac} - {cb.DonVi?.TenDV}
                 </option>
-              ))}
+              ))} */}
+              {Array.isArray(canBoList) &&
+                canBoList.map((cb) => (
+                  <option key={cb.MaCB} value={cb.MaCB}>
+                    {cb.HoTenKhaiSinh} - {cb.CapBac} - {cb.DonVi?.TenDV}
+                  </option>
+                ))}
             </select>
           </div>
 
           {selectedCanBo && (
             <div className="bg-blue-50 p-3 rounded">
-              <h4 className="font-medium text-blue-700 mb-2">Thông tin cán bộ:</h4>
-              <p><strong>Họ tên:</strong> {selectedCanBo.HoTenKhaiSinh}</p>
-              <p><strong>Cấp bậc:</strong> {selectedCanBo.CapBac}</p>
-              <p><strong>Chức vụ:</strong> {selectedCanBo.ChucVu}</p>
-              <p><strong>Đơn vị:</strong> {selectedCanBo.DonVi?.TenDV}</p>
+              <h4 className="font-medium text-blue-700 mb-2">
+                Thông tin cán bộ:
+              </h4>
+              <p>
+                <strong>Họ tên:</strong> {selectedCanBo.HoTenKhaiSinh}
+              </p>
+              <p>
+                <strong>Cấp bậc:</strong> {selectedCanBo.CapBac}
+              </p>
+              <p>
+                <strong>Chức vụ:</strong> {selectedCanBo.ChucVu}
+              </p>
+              <p>
+                <strong>Đơn vị:</strong> {selectedCanBo.DonVi?.TenDV}
+              </p>
             </div>
           )}
 

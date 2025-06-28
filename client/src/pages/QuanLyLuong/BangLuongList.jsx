@@ -9,7 +9,7 @@ import { toast } from "react-hot-toast";
 
 const statusClass = {
   1: "text-yellow-600 font-medium",
-  2: "text-green-600 font-medium", 
+  2: "text-green-600 font-medium",
   0: "text-red-600 font-medium",
 };
 
@@ -32,11 +32,9 @@ const BangLuongList = () => {
   const fetchBangLuong = async () => {
     try {
       setLoading(true);
-      console.log("Fetching with filters:", filters);
-      
+
       const res = await api.getAll(filters);
-      console.log("API Response:", res.data);
-      
+
       if (res.data && res.data.data) {
         setData(res.data.data);
       } else if (Array.isArray(res.data)) {
@@ -86,11 +84,11 @@ const BangLuongList = () => {
     }
 
     try {
-      const result = await api.tinhLuong({ 
+      const result = await api.tinhLuong({
         thangNam: filters.thangNam,
-        donViId: filters.donVi || null 
+        donViId: filters.donVi || null,
       });
-      
+
       if (result.data?.message) {
         toast.success(result.data.message);
       } else {
@@ -182,10 +180,7 @@ const BangLuongList = () => {
           QUẢN LÝ BẢNG LƯƠNG CÁN BỘ
         </h1>
         <div className="flex gap-2">
-          <Button
-            className="bg-green-600 text-white"
-            onClick={handleTinhLuong}
-          >
+          <Button className="bg-green-600 text-white" onClick={handleTinhLuong}>
             <Calculator className="w-4 h-4 mr-1" /> Tính lương
           </Button>
           <Button
@@ -214,12 +209,15 @@ const BangLuongList = () => {
         >
           <option value="">Tất cả đơn vị</option>
           {donViList.map((dv) => (
-            <option key={dv.MaDV} value={dv.TenDV}>
+            <option key={dv.MaDV} value={dv.MaDV}>
               {dv.TenDV}
             </option>
           ))}
         </select>
-        <Button variant="outline" onClick={() => setFilters({ thangNam: "", donVi: "" })}>
+        <Button
+          variant="outline"
+          onClick={() => setFilters({ thangNam: "", donVi: "" })}
+        >
           Xóa bộ lọc
         </Button>
       </div>
@@ -250,18 +248,32 @@ const BangLuongList = () => {
                 data.map((row, index) => (
                   <tr key={row.MaBL}>
                     <td className="border p-2">{index + 1}</td>
-                    <td className="border p-2">CB{String(row.MaCB).padStart(3, "0")}</td>
+                    <td className="border p-2">
+                      CB{String(row.MaCB).padStart(3, "0")}
+                    </td>
                     <td className="border p-2">{row.HoTen}</td>
                     <td className="border p-2 font-medium">{row.ThangNam}</td>
                     <td className="border p-2">{row.CapBac}</td>
                     <td className="border p-2">{row.ChucVu}</td>
                     <td className="border p-2">{row.DonVi}</td>
-                    <td className="border p-2">{formatCurrency(row.LuongCoBan)}</td>
                     <td className="border p-2">
-                      {formatCurrency((row.PhuCapChucVu || 0) + (row.PhuCapCapBac || 0) + (row.PhuCapKhac || 0))}
+                      {formatCurrency(row.LuongCoBan)}
                     </td>
-                    <td className="border p-2 font-bold">{formatCurrency(row.ThucLanh)}</td>
-                    <td className={`border p-2 ${statusClass[row.TrangThai] || ""}`}>
+                    <td className="border p-2">
+                      {formatCurrency(
+                        (row.PhuCapChucVu || 0) +
+                          (row.PhuCapCapBac || 0) +
+                          (row.PhuCapKhac || 0)
+                      )}
+                    </td>
+                    <td className="border p-2 font-bold">
+                      {formatCurrency(row.ThucLanh)}
+                    </td>
+                    <td
+                      className={`border p-2 ${
+                        statusClass[row.TrangThai] || ""
+                      }`}
+                    >
                       {statusText[row.TrangThai]}
                     </td>
                     <td className="border p-2 space-x-1">
@@ -275,7 +287,9 @@ const BangLuongList = () => {
                       <Button
                         className="bg-blue-600 text-white"
                         size="sm"
-                        onClick={() => navigate("/bangluong/form", { state: row })}
+                        onClick={() =>
+                          navigate("/bangluong/form", { state: row })
+                        }
                       >
                         Sửa
                       </Button>
@@ -296,7 +310,7 @@ const BangLuongList = () => {
                             Duyệt
                           </Button>
                           <Button
-                            className="bg-orange-600 text-white" 
+                            className="bg-orange-600 text-white"
                             size="sm"
                             onClick={() => handleReject(row.MaBL)}
                           >

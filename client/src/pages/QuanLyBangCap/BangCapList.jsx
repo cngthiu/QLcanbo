@@ -19,8 +19,8 @@ import Pagination from "../../components/Pagination";
 
 const statusClass = {
   "Đã duyệt": "text-green-600 font-medium",
-  "Cập nhật": "text-yellow-600 font-medium",
-  "Từ chối": "text-red-600 font-medium",
+  "Chờ duyệt": "text-yellow-600 font-medium",
+  "Bị từ chối": "text-red-600 font-medium",
 };
 
 const BangCapList = () => {
@@ -36,7 +36,6 @@ const BangCapList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-
   const navigate = useNavigate();
 
   const fetchBangCap = async () => {
@@ -49,8 +48,8 @@ const BangCapList = () => {
   };
 
   const handlePageChange = (page) => {
-  setCurrentPage(page);
-};
+    setCurrentPage(page);
+  };
 
   const handleDeleteClick = (id) => {
     setIdToDelete(id);
@@ -110,11 +109,17 @@ const BangCapList = () => {
             setFilters((f) => ({ ...f, keyword: e.target.value }))
           }
         />
-        <Select onValueChange={(v) => setFilters((f) => ({ ...f, dv: v }))}>
+        <Select
+          value={filters.dv || "__all__"}
+          onValueChange={(v) =>
+            setFilters((f) => ({ ...f, dv: v === "__all__" ? "" : v }))
+          }
+        >
           <SelectTrigger className="w-40">
             <SelectValue placeholder="Đơn vị" />
           </SelectTrigger>
           <SelectContent>
+            <SelectItem value="__all__">Tất cả đơn vị</SelectItem>
             {donViList.map((dv) => (
               <SelectItem key={dv.MaDV} value={dv.TenDV}>
                 {dv.TenDV}
@@ -123,11 +128,17 @@ const BangCapList = () => {
           </SelectContent>
         </Select>
 
-        <Select onValueChange={(v) => setFilters((f) => ({ ...f, type: v }))}>
+        <Select
+          value={filters.type || "__all__"}
+          onValueChange={(v) =>
+            setFilters((f) => ({ ...f, type: v === "__all__" ? "" : v }))
+          }
+        >
           <SelectTrigger className="w-40">
             <SelectValue placeholder="Loại văn bằng" />
           </SelectTrigger>
           <SelectContent>
+            <SelectItem value="__all__">Tất cả loại văn bằng</SelectItem>
             {loaiBangList.map((lb) => (
               <SelectItem key={lb.MaLBC} value={lb.LoaiBangCap}>
                 {lb.LoaiBangCap}
@@ -224,10 +235,10 @@ const BangCapList = () => {
 
       <div className="mt-4 flex justify-end">
         <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={handlePageChange}
-      />
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
       </div>
     </div>
   );
