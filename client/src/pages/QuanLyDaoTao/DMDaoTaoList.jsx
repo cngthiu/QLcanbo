@@ -19,7 +19,7 @@ const DMDaoTaoList = () => {
   const [showConfirm, setShowConfirm] = useState(false);
   const [idToDelete, setIdToDelete] = useState(null);
   const [page, setPage] = useState(1);
-  const pageSize = 15;
+  const pageSize = 5;
   const [total, setTotal] = useState(0);
 
   const navigate = useNavigate();
@@ -27,8 +27,8 @@ const DMDaoTaoList = () => {
   const fetchData = async () => {
     try {
       const res = await api.getAllDMDaoTao({ page, pageSize });
-      setData(res.data || []);
-      setTotal(res.total || 0);
+      setData(res.data?.data || res.data || []);
+      setTotal(res.data?.total ?? res.total ?? 0);
     } catch (err) {
       console.error("Error fetching DMDaoTao:", err);
       toast.error("Không thể tải dữ liệu danh mục đào tạo.");
@@ -94,9 +94,9 @@ const DMDaoTaoList = () => {
         <tbody>
           {data.map((row, idx) => (
             <tr key={row.MaDM}>
-              <td className="border p-2 ">{(page - 1) * pageSize + idx + 1}</td>
+              <td className="border p-2">{(page - 1) * pageSize + idx + 1}</td>
               <td className="border p-2">{row.TenDM || "N/A"}</td>
-              <td className="border p-2 ">{row.MoTa || "N/A"}</td>
+              <td className="border p-2">{row.MoTa || "N/A"}</td>
               <td className={`border p-2 ${row.TrangThai?.TenTrangThai === "Ngưng hoạt động" ? "text-red-600 font-medium" : "text-green-600 font-medium"}`}>
                 {row.TrangThai?.TenTrangThai || "N/A"}
               </td>

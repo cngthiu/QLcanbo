@@ -11,4 +11,5 @@ router.get("/search", authenticate, authorize("ADMIN"), ctrl.searchCanBo);
 router.post("/thamgia/:MaCT", authenticate, authorize("ADMIN"), ctrl.addCanBoToCTDT);
 router.delete("/thamgia/:MaCT/:MaCB", authenticate, authorize("ADMIN"), ctrl.removeCanBoFromCTDT);
 router.post("/thamgia/:MaCT/send", authenticate, authorize("ADMIN"), ctrl.sendEmailForTraining);
+router.get("/:id", authenticate, authorize("ADMIN"), ctrl.getById);
 module.exports = router;

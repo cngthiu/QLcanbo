@@ -12,18 +12,23 @@ const DaoTaoDetail = () => {
   const [thamGiaList, setThamGiaList] = useState([]);
   const [showConfirm, setShowConfirm] = useState(false);
   const [maCBToDelete, setMaCBToDelete] = useState(null);
+  const [page, setPage] = useState(1);
+  const pageSize = 10;
+  const [total, setTotal] = useState(0);
 
   useEffect(() => {
     fetchThamGiaList();
-  }, [id]);
+  }, [id, page]);
 
   const fetchThamGiaList = async () => {
     try {
-      const res = await api.getThamGiaByMaCT(id);
-      setThamGiaList(res.data || []);
+      const res = await api.getThamGiaByMaCT(id, page, pageSize);
+      setThamGiaList(res.data.data || []);
+      setTotal(res.data.total || 0);
     } catch (err) {
       console.error("Lỗi lấy danh sách tham gia:", err);
       setThamGiaList([]);
+      setTotal(0);
     }
   };
   
@@ -54,7 +59,19 @@ const DaoTaoDetail = () => {
         <div className="flex justify-end w-full">
           <Button
             className="bg-blue-600 text-white"
-            onClick={() => navigate(`/daotao/thamgia/${id}/form`)}
+            onClick={async () => {
+              try {
+                const res = await api.getById(id);
+                console.log('MaTrangThai:', res.data?.MaTrangThai);
+                if (!res.data || res.data.MaTrangThai.trim() !== '1') {
+                  toast.error('Chương trình đã dừng đào tạo không thể thêm cán bộ');
+                  return;
+                }
+                navigate(`/daotao/thamgia/${id}/form`);
+              } catch {
+                toast.error('Không thể kiểm tra trạng thái chương trình');
+              }
+            }}
           >
             <Plus className="w-4 h-4 " /> Thêm cán bộ
           </Button>
@@ -73,7 +90,19 @@ const DaoTaoDetail = () => {
         <div className="flex justify-end w-full">
           <Button
             className="bg-blue-600 text-white"
-            onClick={() => navigate(`/daotao/thamgia/${id}/form`)}
+            onClick={async () => {
+              try {
+                const res = await api.getById(id);
+                console.log('MaTrangThai:', res.data?.MaTrangThai);
+                if (!res.data || res.data.MaTrangThai !== '1') {
+                  toast.error('Chương trình đã dừng đào tạo');
+                  return;
+                }
+                navigate(`/daotao/thamgia/${id}/form`);
+              } catch {
+                toast.error('Không thể kiểm tra trạng thái chương trình');
+              }
+            }}
           >
             <Plus className="w-4 h-4 " /> Thêm cán bộ
           </Button>
@@ -93,7 +122,7 @@ const DaoTaoDetail = () => {
         <tbody>
           {thamGiaList.map((cb, idx) => (
             <tr key={cb.MaCB}>
-              <td className="border p-2 text-center">{idx + 1}</td>
+              <td className="border p-2 text-center">{(page - 1) * pageSize + idx + 1}</td>
               <td className="border p-2">{cb.HoTenKhaiSinh}</td>
               <td className="border p-2">{cb.CapBac}</td>
               <td className="border p-2">{cb.TenCT}</td>
@@ -111,6 +140,24 @@ const DaoTaoDetail = () => {
           ))}
         </tbody>
       </table>
+      
+      <div className="flex justify-end items-center mt-4">
+        <Button
+          className="bg-white border-2 text-blue-600 font-bold rounded-none"
+          disabled={page === 1}
+          onClick={() => setPage((p) => Math.max(1, p - 1))}
+        >
+          Quay lại
+        </Button>
+        <span className="border px-3 py-1 bg-blue-600 font-bold">{page}</span>
+        <Button
+          className="bg-white border-2 text-blue-600 font-bold rounded-none"
+          disabled={page * pageSize >= total}
+          onClick={() => setPage((p) => p + 1)}
+        >
+          Tiếp tục
+        </Button>
+      </div>
       
       <ConfirmDialog
         open={showConfirm}

@@ -3,13 +3,16 @@ const { Op } = require("sequelize");
 
 // Lấy tất cả chương trình đào tạo, có filter nếu cần
 const getAllDaoTao = async (filters = {}) => {
-  const { keyword = "" } = filters;
+  const { keyword = "", page = 1, pageSize = 10 } = filters;
   const whereClause = {};
   if (keyword) {
     whereClause.TenCT = { [Op.like]: `%${keyword}%` };
   }
+  const offset = (parseInt(page) - 1) * parseInt(pageSize);
+  const limit = parseInt(pageSize);
+
   try {
-    const list = await DaoTao.findAll({
+    const { rows, count } = await DaoTao.findAndCountAll({
       where: whereClause,
       include: [
         {
@@ -24,8 +27,13 @@ const getAllDaoTao = async (filters = {}) => {
         },
       ],
       order: [["MaCT", "DESC"]],
+      offset,
+      limit,
     });
-    return list.map((ct) => ct.get({ plain: true }));
+    return {
+      data: rows.map((ct) => ct.get({ plain: true })),
+      total: count,
+    };
   } catch (error) {
     console.error("LỖI KHI LẤY CHƯƠNG TRÌNH ĐÀO TẠO:", error);
     throw error;
@@ -62,10 +70,16 @@ const removeDaoTao = async (id) => {
 // await record.update({ MaTrangThai: '2' });
 // return true;
 // Truy vấn thông tin tham gia đào tạo (join nhiều bảng)
-const getThamGiaByMaCT = async (MaCT) => {
+const getThamGiaByMaCT = async (MaCT, page = 1, pageSize = 10) => {
   const where = {};
   if (MaCT) where.MaCT = MaCT;
+  const offset = (parseInt(page) - 1) * parseInt(pageSize);
+  const limit = parseInt(pageSize);
 
+  // Đếm tổng số cán bộ tham gia
+  const total = await CTDT_CanBo.count({ where });
+
+  // Lấy danh sách phân trang
   const list = await CTDT_CanBo.findAll({
     where,
     include: [
@@ -92,23 +106,28 @@ const getThamGiaByMaCT = async (MaCT) => {
       },
     ],
     order: [["MaCB", "ASC"]],
+    offset,
+    limit,
   });
-  // Map lại dữ liệu phẳng
-  return list.map(item => ({
-    MaCB: item.CanBo?.MaCB,
-    HoTenKhaiSinh: item.CanBo?.HoTenKhaiSinh,
-    CapBac: item.CanBo?.CapBac,
-    MaDV: item.CanBo?.MaDV,
-    TenDV: item.CanBo?.DonVi?.TenDV,
-    MaCT: item.DaoTao?.MaCT,
-    TenCT: item.DaoTao?.TenCT,
-    Khoa: item.DaoTao?.Khoa,
-    MaDM: item.DaoTao?.MaDM,
-    TenDM: item.DaoTao?.DanhMuc?.TenDM,
-    NgayBatDau: item.DaoTao?.NgayBatDau,
-    NgayKetThuc: item.DaoTao?.NgayKetThuc,
-    DiaDiem: item.DaoTao?.DiaDiem,
-  }));
+
+  return {
+    data: list.map(item => ({
+      MaCB: item.CanBo?.MaCB,
+      HoTenKhaiSinh: item.CanBo?.HoTenKhaiSinh,
+      CapBac: item.CanBo?.CapBac,
+      MaDV: item.CanBo?.MaDV,
+      TenDV: item.CanBo?.DonVi?.TenDV,
+      MaCT: item.DaoTao?.MaCT,
+      TenCT: item.DaoTao?.TenCT,
+      Khoa: item.DaoTao?.Khoa,
+      MaDM: item.DaoTao?.MaDM,
+      TenDM: item.DaoTao?.DanhMuc?.TenDM,
+      NgayBatDau: item.DaoTao?.NgayBatDau,
+      NgayKetThuc: item.DaoTao?.NgayKetThuc,
+      DiaDiem: item.DaoTao?.DiaDiem,
+    })),
+    total,
+  };
 };
 
 // Tìm kiếm cán bộ theo tên
@@ -162,6 +181,19 @@ const removeCanBoFromCTDT = async (MaCT, MaCB) => {
   return true;
 };
 
+const getDaoTaoById = async (id) => {
+  const record = await DaoTao.findByPk(id, {
+    include: [
+      {
+        model: TrangThai,
+        as: "TrangThai",
+        attributes: ["MaTrangThai", "TenTrangThai"],
+      },
+    ],
+  });
+  return record ? record.get({ plain: true }) : null;
+};
+
 module.exports = {
   getAllDaoTao,
   createDaoTao,
@@ -172,4 +204,5 @@ module.exports = {
   searchCanBoByName,
   addCanBoToCTDT,
   removeCanBoFromCTDT,
+  getDaoTaoById,
 };

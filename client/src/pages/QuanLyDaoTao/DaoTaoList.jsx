@@ -20,7 +20,7 @@ const DaoTaoList = () => {
   const [idToDelete, setIdToDelete] = useState(null);
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
-  const pageSize = 15;
+  const pageSize = 10;
   const [total, setTotal] = useState(0);
 
   const navigate = useNavigate();
@@ -28,8 +28,8 @@ const DaoTaoList = () => {
   const fetchDaoTao = async () => {
     try {
       const res = await api.getAll({ keyword: search, page, pageSize });
-      setData(res.data || []);
-      setTotal(res.total || 0);
+      setData(res.data.data || []);
+      setTotal(res.data.total || 0);
     } catch (err) {
       console.error("Lỗi lấy dữ liệu:", err);
       toast.error("Không thể tải dữ liệu đào tạo.");
@@ -138,7 +138,7 @@ const DaoTaoList = () => {
         <tbody>
           {data.map((row, index) => (
             <tr key={row.MaCT}>
-              <td className="border p-2">{index + 1}</td>
+              <td className="border p-2">{(page - 1) * pageSize + index + 1}</td>
               <td className="border p-2">
                 {row.TenCT ? (
                   <button

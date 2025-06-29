@@ -1,19 +1,32 @@
 const { DMDaoTao, TrangThai } = require("../models/init"); // Destructuring để lấy DMDaoTao
 const { Op } = require("sequelize");
 
-const getAllDMDaoTao = async () => {
+const getAllDMDaoTao = async (filters = {}) => {
+  const { keyword = "", page = 1, pageSize = 5 } = filters;
+  const whereClause = {};
+  if (keyword) {
+    whereClause.TenDM = { [Op.like]: `%${keyword}%` };
+  }
+  const offset = (parseInt(page) - 1) * parseInt(pageSize);
+  const limit = parseInt(pageSize);
   try {
-    const list = await DMDaoTao.findAll({
+    const { rows, count } = await DMDaoTao.findAndCountAll({
+      where: whereClause,
       include: [
         {
           model: TrangThai,
           as: "TrangThai",
-          attributes: ["MaTrangThai", "TenTrangThai"], // Bao gồm cả MaTrangThai để debug
+          attributes: ["MaTrangThai", "TenTrangThai"],
         },
       ],
       order: [["MaDM", "ASC"]],
+      offset,
+      limit,
     });
-    return list;
+    return {
+      data: rows.map((dm) => dm.get({ plain: true })),
+      total: count,
+    };
   } catch (error) {
     console.error("LỖI KHI LẤY DANH MỤC ĐÀO TẠO:", error);
     throw error;

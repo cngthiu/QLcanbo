@@ -9,10 +9,19 @@ const GuiEmail = () => {
   const navigate = useNavigate();
   const [thamGiaList, setThamGiaList] = useState([]);
   const [selectedDonVi, setSelectedDonVi] = useState([]);
+  const randomNumber = Math.floor(Math.random() * 900) + 100;
 
   useEffect(() => {
     api.getThamGiaByMaCT(id)
-      .then((res) => setThamGiaList(res.data))
+      .then((res) => {
+        if (Array.isArray(res.data)) {
+          setThamGiaList(res.data);
+        } else if (Array.isArray(res.data?.data)) {
+          setThamGiaList(res.data.data);
+        } else {
+          setThamGiaList([]);
+        }
+      })
       .catch(() => setThamGiaList([]));
   }, [id]);
 
@@ -88,7 +97,7 @@ const GuiEmail = () => {
               <div className="text-xs font-bold leading-tight">
                 HỌC VIỆN KỸ THUẬT QUÂN SỰ<br />
                 <span className="font-extrabold">PHÒNG ĐÀO TẠO</span><br />
-                Số: 144/ĐT-KH
+                Số: {randomNumber}/ĐT-KH
               </div>
             </div>
             <div className="w-1/2 text-center">
@@ -154,7 +163,7 @@ const GuiEmail = () => {
               CÁN BỘ, GIẢNG VIÊN THAM GIA KHÓA ĐÀO TẠO VÀ THI CHỨNG CHỈ
             </div>
             <div className="text-center text-xs mb-2">
-              (Kèm theo Công văn số: 144/ĐT-KH ngày {formatDate(new Date())} của Phòng Đào tạo)
+              {`(Kèm theo Công văn số: ${randomNumber}/ĐT-KH ngày ${formatDate(new Date())} của Phòng Đào tạo)`}
             </div>
             <div className="text-left font-bold text-xs mb-2">
               1. Lớp {info?.TenCT || "..."} : {thamGiaList.length} đồng chí

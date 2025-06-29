@@ -46,7 +46,8 @@ exports.remove = async (req, res) => {
 
 exports.getThamGiaByMaCT = async (req, res) => {
   try {
-    const result = await service.getThamGiaByMaCT(req.query.MaCT);
+    const { MaCT, page = 1, pageSize = 10 } = req.query;
+    const result = await service.getThamGiaByMaCT(MaCT, page, pageSize);
     res.json(result);
   } catch (error) {
     res.status(500).json({ message: "Lỗi truy vấn tham gia đào tạo", error: error.message });
@@ -100,6 +101,7 @@ exports.sendEmailForTraining = async (req, res) => {
     res.status(500).json({ message: "Lỗi server khi gửi email" });
   }
 };
+
 exports.getAllEmails = async (req, res) => {
   try {
     const users = await userService.getAllUsers();
@@ -114,5 +116,15 @@ exports.getAllEmails = async (req, res) => {
   } catch (err) {
     console.error("Lỗi khi lấy danh sách email:", err);
     res.status(500).json({ message: "Lỗi server khi lấy danh sách email" });
+  }
+};
+
+exports.getById = async (req, res) => {
+  try {
+    const record = await service.getDaoTaoById(req.params.id);
+    if (!record) return res.status(404).json({ message: "Không tìm thấy chương trình đào tạo" });
+    res.json(record);
+  } catch (error) {
+    res.status(500).json({ message: "Lỗi truy vấn chi tiết chương trình", error: error.message });
   }
 };

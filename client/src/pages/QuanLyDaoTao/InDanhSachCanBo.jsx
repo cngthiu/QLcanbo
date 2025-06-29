@@ -10,7 +10,15 @@ const InDanhSachCanBo = () => {
 
   useEffect(() => {
     api.getThamGiaByMaCT(id)
-      .then((res) => setThamGiaList(res.data))
+      .then((res) => {
+        if (Array.isArray(res.data)) {
+          setThamGiaList(res.data);
+        } else if (Array.isArray(res.data?.data)) {
+          setThamGiaList(res.data.data);
+        } else {
+          setThamGiaList([]);
+        }
+      })
       .catch(() => setThamGiaList([]));
   }, [id]);
 
@@ -34,7 +42,7 @@ const InDanhSachCanBo = () => {
             CÁN BỘ, GIẢNG VIÊN THAM GIA KHÓA ĐÀO TẠO VÀ THI CHỨNG CHỈ
           </div>
           <div className="text-center text-sm mb-2">
-            (Kèm theo Công văn số: 144/ĐT-KH ngày 12/5/2025 của Phòng Đào tạo)
+            {`(Kèm theo Công văn số: ${Math.floor(Math.random() * 900) + 100}/ĐT-KH ngày 12/5/2025 của Phòng Đào tạo)`}
           </div>
           <div className="text-left font-bold mb-2">
             2. Lớp {thamGiaList[0]?.TenCT || "..."} : {thamGiaList.length} đồng chí

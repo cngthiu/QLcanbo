@@ -6,7 +6,7 @@ const API = {
   update: (id, data) => axios.put(`/daotao/${id}`, data),
   remove: (id) => axios.delete(`/daotao/${id}`),
   getAllFiltered: (params) => axios.get("/daotao", { params }),
-  getAllDMDaoTao: () => axios.get("/dmdaotao"),
+  getAllDMDaoTao: (params) => axios.get("/dmdaotao", { params }),
   createDMDaoTao: (data) => axios.post("/dmdaotao", data),
   updateDMDaoTao: (id, data) => axios.put(`/dmdaotao/${id}`, data),
   removeDMDaoTao: (id) => axios.delete(`/dmdaotao/${id}`),
@@ -17,6 +17,7 @@ const API = {
   removeCanBoFromCTDT: (MaCT, MaCB) => axios.delete(`/daotao/thamgia/${MaCT}/${MaCB}`),
   sendEmailForTraining: (MaCT, data) => axios.post(`/daotao/thamgia/${MaCT}/send`, data),
   getEmailsByUserId: (userId) => axios.get("/users/emails", { params: { userId } }),
+  getById: (id) => axios.get(`/daotao/${id}`),
 };
 
 export default API;

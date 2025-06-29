@@ -27,7 +27,7 @@ const DaoTaoFormPage = () => {
     const fetchDropdowns = async () => {
       try {
         const dmRes = await api.getAllDMDaoTao();
-        setDanhMucList(dmRes.data || []);
+        setDanhMucList(dmRes.data?.data || []);
         const ttRes = await api.getAllTrangThai();
         setTrangThaiList(ttRes.data || []);
       } catch {
